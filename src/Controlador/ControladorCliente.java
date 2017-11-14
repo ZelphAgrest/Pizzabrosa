@@ -1,45 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor. Comentario by Lorenzo . Comentario by Me
- */
+
 package Controlador;
+
 import Modelo.ClienteDAO;
 import Vista.AdminCliente;
 import Vista.VentanaClientes;
-import modelo.*;
-import Vista.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Zelph
- */
-public class ControladorCliente implements ActionListener{
-    VentanaClientes vista = new VentanaClientes();
+
+public class ControladorCliente implements ActionListener, Comunica {
+
+    VentanaClientes vista = new VentanaClientes(this);
     AdminCliente vistaAdmin = new AdminCliente();
     ClienteDAO modelo = new ClienteDAO();
-    
-    
-    public ControladorCliente(VentanaClientes vista, ClienteDAO modelo){
+
+    public ControladorCliente(VentanaClientes vista, ClienteDAO modelo) {
         this.modelo = modelo;
-        this.vista= vista;
+        this.vista = vista;
         this.vista.botonGuardar.addActionListener(this);
-        
+        this.vista.botonRegresar.addActionListener(this);
     }
-    
-    public void inicializar(){
-    
+
+    public ControladorCliente(AdminCliente vistaAdmin, ClienteDAO modelo) {
+        this.modelo = modelo;
+        this.vistaAdmin = vistaAdmin;
+        this.vistaAdmin.botonActualizar.addActionListener(this);
     }
-    
-    public void LlenarTabla(JTable tabla){
+
+    public void inicializar() {
+
+    }
+
+    public void LlenarTabla(JTable tabla) {
         DefaultTableModel modeloT = new DefaultTableModel();
         tabla.setModel(modeloT);
-        
+
         modeloT.addColumn("Nombre");
         modeloT.addColumn("Apellido");
         modeloT.addColumn("Teléfono");
@@ -47,9 +45,9 @@ public class ControladorCliente implements ActionListener{
         modeloT.addColumn("Dirección");
         modeloT.addColumn("Código Postal");
         modeloT.addColumn("Ciudad");
-        
+
         Object[] columna = new Object[7];
-        
+
         int numRegistros = modelo.listCliente().size();
         for (int i = 0; i < numRegistros; i++) {
             columna[0] = modelo.listCliente().get(i).getNombre();
@@ -62,32 +60,37 @@ public class ControladorCliente implements ActionListener{
             modeloT.addRow(columna);
         }
     }
-    
-    public void actionPerformed(ActionEvent e){
-       if(e.getSource() == vista.botonGuardar){
-           String nombre = vista.txtNombre.getText();
-           String apellido = vista.txtApellido.getText();
-           String telefono = vista.txtTelefono.getText();
-           String email = vista.txtEmail.getText();
-           String direccion = vista.txtDireccion.getText();
-           String cp = vista.txtCP.getText();
-           String ciudad = vista.txtCiudad.getText();
-           
-           String rptaRegistro = modelo.insertCliente(nombre, apellido, telefono, email, direccion, cp, ciudad);
-           
-           if(rptaRegistro!=null && rptaRegistro.equals("Registro Exitoso")){
-               JOptionPane.showMessageDialog(null, "El registro del cliente "+nombre+" ha sido guardado con éxito");
-           }else{
-               JOptionPane.showMessageDialog(null, "Ocurrio un error al ingresar el registro");
-           }
-       }
-       if(e.getSource() == vistaAdmin.botonActualizar){
-           LlenarTabla(vistaAdmin.tablitaClientes);
-            //JOptionPane.showMessageDialog(null, "Aquí va la tabla xD");
-       
-       }
-       
-       
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == vista.botonGuardar) {
+            String nombre = vista.txtNombre.getText();
+            String apellido = vista.txtApellido.getText();
+            String telefono = vista.txtTelefono.getText();
+            String email = vista.txtEmail.getText();
+            String direccion = vista.txtDireccion.getText();
+            String cp = vista.txtCP.getText();
+            String ciudad = vista.txtCiudad.getText();
+
+            String rptaRegistro = modelo.insertCliente(nombre, apellido, telefono, email, direccion, cp, ciudad);
+
+            if (rptaRegistro != null && rptaRegistro.equals("Registro Exitoso")) {
+                JOptionPane.showMessageDialog(null, "El registro del cliente " + nombre + " ha sido guardado con éxito");
+            } else {
+                JOptionPane.showMessageDialog(null, "Ocurrio un error al ingresar el registro");
+            }
+        }
+        if (e.getSource() == vistaAdmin.botonActualizar) {
+            System.out.println("boton actualizar");
+            LlenarTabla(vistaAdmin.tablitaClientes);
+            System.out.println("boton actualizar");
+        }
+
+        if (e.getSource() == vista.botonRegresar) {
+            vista.setVisible(false);
+        }
+
     }
-    
+
 }

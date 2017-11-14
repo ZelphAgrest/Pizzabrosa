@@ -12,11 +12,11 @@ public class Pizzabrosa {
 
    
     public static void main(String[] args) {
-        VentanaClientes vistaC= new VentanaClientes();
+       // VentanaClientes vistaC= new VentanaClientes();
         ClienteDAO modeloC = new ClienteDAO();
-        ControladorCliente controlaC = new ControladorCliente(vistaC, modeloC);
-        vistaC.setVisible(true);
-        vistaC.setLocationRelativeTo(null);
+       //ControladorCliente controlaC = new ControladorCliente(vistaC, modeloC);
+       // vistaC.setVisible(true);
+      //  vistaC.setLocationRelativeTo(null);
     
     }
     
