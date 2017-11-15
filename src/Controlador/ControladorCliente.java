@@ -4,6 +4,7 @@ package Controlador;
 import Modelo.ClienteDAO;
 import Vista.MenuPrincipal;
 import Vista.RegistrarClientes;
+import Vista.RegistrarEmpleado;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -14,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 public class ControladorCliente implements ActionListener, Comunica {
 
     RegistrarClientes vista = new RegistrarClientes(this);
+    RegistrarEmpleado vistaEmpleado = new RegistrarEmpleado(this);
     MenuPrincipal vistaAdmin = new MenuPrincipal();
     ClienteDAO modelo = new ClienteDAO();
 
@@ -23,6 +25,7 @@ public class ControladorCliente implements ActionListener, Comunica {
         this.vista.botonGuardar.addActionListener(this);
         this.vista.botonRegresar.addActionListener(this);
     }
+     
 
     public ControladorCliente(MenuPrincipal vistaAdmin, ClienteDAO modelo) {
         this.modelo = modelo;
@@ -90,6 +93,8 @@ public class ControladorCliente implements ActionListener, Comunica {
         if (e.getSource() == vista.botonRegresar) {
             vista.setVisible(false);
         }
+        
+      
 
     }
 

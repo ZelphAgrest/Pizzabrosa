@@ -7,7 +7,9 @@ package Vista;
 
 import Controlador.Comunica;
 import Controlador.ControladorCliente;
+import Controlador.ControladorEmpleado;
 import Modelo.ClienteDAO;
+import Modelo.EmpleadoDAO;
 import javax.swing.JFrame;
 
 /**
@@ -21,12 +23,13 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
      */
     public MenuPrincipal() {
         initComponents();
-        setTitle("Pizzabrosa");
+        setTitle("Pizzabrosa - Menú Principal");
         setLocationRelativeTo(null);
         setResizable(false);
     }
 
   RegistrarClientes vc = new RegistrarClientes(this);
+  RegistrarEmpleado ve = new RegistrarEmpleado(this);
     
     
     @SuppressWarnings("unchecked")
@@ -34,6 +37,9 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
     private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
+        popup = new javax.swing.JPopupMenu();
+        editarPopUpClientes = new javax.swing.JMenuItem();
+        eliminarPopUpClientes = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -92,6 +98,19 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        editarPopUpClientes.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoEditar.png")); // NOI18N
+        editarPopUpClientes.setText("Editar");
+        editarPopUpClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarPopUpClientesActionPerformed(evt);
+            }
+        });
+        popup.add(editarPopUpClientes);
+
+        eliminarPopUpClientes.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoEliminar.png")); // NOI18N
+        eliminarPopUpClientes.setText("Eliminar");
+        popup.add(eliminarPopUpClientes);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         tablitaClientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -111,6 +130,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
                 "Nombre", "Apellido", "Teléfono", "Dirección", "Código Postal", "Ciudad"
             }
         ));
+        tablitaClientes.setComponentPopupMenu(popup);
         jScrollPane1.setViewportView(tablitaClientes);
 
         botonActualizar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoActualizar.png")); // NOI18N
@@ -229,6 +249,11 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         botonActualizarEmpleado.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoActualizar.png")); // NOI18N
 
         botonRegistrarEmpleado.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoRegistrarUsuario.png")); // NOI18N
+        botonRegistrarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistrarEmpleadoActionPerformed(evt);
+            }
+        });
 
         botonCerrarSesionEmpleado.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoCerrarSesión.png")); // NOI18N
 
@@ -512,6 +537,19 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         ControladorCliente controlaD = new ControladorCliente(this,modeloD);
     }//GEN-LAST:event_botonActualizarActionPerformed
 
+    private void editarPopUpClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarPopUpClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editarPopUpClientesActionPerformed
+
+    private void botonRegistrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarEmpleadoActionPerformed
+        EmpleadoDAO modeloE = new EmpleadoDAO();
+        ControladorEmpleado controlaE = new ControladorEmpleado(ve, modeloE);
+        ve.setVisible(true);
+        ve.pack();
+        ve.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ve.setLocationRelativeTo(null);
+    }//GEN-LAST:event_botonRegistrarEmpleadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -563,7 +601,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablaEmpleados;
+    public javax.swing.JTable TablaEmpleados;
     private javax.swing.JTable TablaPedidos;
     public javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonActualizarEmpleado;
@@ -581,6 +619,8 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
     private javax.swing.JButton botonRegistrar;
     private javax.swing.JButton botonRegistrarEmpleado;
     private javax.swing.JButton botonRegistrarProducto;
+    private javax.swing.JMenuItem editarPopUpClientes;
+    private javax.swing.JMenuItem eliminarPopUpClientes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -601,6 +641,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JPopupMenu popup;
     private javax.swing.JTable tablaProductos;
     public javax.swing.JTable tablitaClientes;
     private javax.swing.JTextField txtBuscarEmpleado;
