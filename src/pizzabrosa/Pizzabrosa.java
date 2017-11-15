@@ -4,7 +4,7 @@ import modelo.*;
 import vista.*;
 import Controlador.*;
 import Modelo.ClienteDAO;
-import Vista.VentanaClientes;
+import Vista.RegistrarClientes;
 import com.sun.security.ntlm.Client;
 
 

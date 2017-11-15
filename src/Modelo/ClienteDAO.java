@@ -2,7 +2,7 @@
 package Modelo;
 import java.sql.*;
 import java.util.ArrayList;
-import Vista.VentanaClientes;
+import Vista.RegistrarClientes;
 
 public class ClienteDAO {
     Conexion conexion;

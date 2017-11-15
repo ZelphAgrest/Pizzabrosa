@@ -2,8 +2,8 @@
 package Controlador;
 
 import Modelo.ClienteDAO;
-import Vista.AdminCliente;
-import Vista.VentanaClientes;
+import Vista.MenuPrincipal;
+import Vista.RegistrarClientes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -13,18 +13,18 @@ import javax.swing.table.DefaultTableModel;
 
 public class ControladorCliente implements ActionListener, Comunica {
 
-    VentanaClientes vista = new VentanaClientes(this);
-    AdminCliente vistaAdmin = new AdminCliente();
+    RegistrarClientes vista = new RegistrarClientes(this);
+    MenuPrincipal vistaAdmin = new MenuPrincipal();
     ClienteDAO modelo = new ClienteDAO();
 
-    public ControladorCliente(VentanaClientes vista, ClienteDAO modelo) {
+    public ControladorCliente(RegistrarClientes vista, ClienteDAO modelo) {
         this.modelo = modelo;
         this.vista = vista;
         this.vista.botonGuardar.addActionListener(this);
         this.vista.botonRegresar.addActionListener(this);
     }
 
-    public ControladorCliente(AdminCliente vistaAdmin, ClienteDAO modelo) {
+    public ControladorCliente(MenuPrincipal vistaAdmin, ClienteDAO modelo) {
         this.modelo = modelo;
         this.vistaAdmin = vistaAdmin;
         this.vistaAdmin.botonActualizar.addActionListener(this);
