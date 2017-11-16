@@ -22,11 +22,11 @@ public class EmpleadoDAO {
         
     }
     
-     public String inserteEmpleado(String nombre,String apellido, String telefono, String email, String direccion, String codigopostal, String ciudad, String usuario, String password){
+     public String inserteEmpleado(String nombre,String apellido, String telefono, String email, String direccion, String codigopostal, String ciudad, String usuario, String password,String tipoEmpleado){
         String rptaRegistro=null;
         try {
             Connection accesoDB = conexion.getConexion();
-            CallableStatement cs= accesoDB.prepareCall("call sp_inserteEmpleado(?,?,?,?,?,?,?,?,?)");
+            CallableStatement cs= accesoDB.prepareCall("call sp_inserteEmpleado(?,?,?,?,?,?,?,?,?,?)");
             
             cs.setString(1, nombre);
             cs.setString(2, apellido);
@@ -37,6 +37,7 @@ public class EmpleadoDAO {
             cs.setString(7, ciudad);
             cs.setString(8, usuario);
             cs.setString(9, password);
+            cs.setString(10, tipoEmpleado);
             
             int numFAfectadas = cs.executeUpdate();
             System.out.println("Filas afectadas "+numFAfectadas);

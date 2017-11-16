@@ -656,11 +656,13 @@
                               <Component id="botonCerrarSesionPedido" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="12" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTextField1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="botonBuscarPedido" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="botonActualzarPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="botonRegistarPedido" alignment="0" min="-2" pref="51" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jTextField1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="botonBuscarPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botonActualzarPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                           <Component id="jScrollPane4" min="-2" pref="175" max="-2" attributes="0"/>

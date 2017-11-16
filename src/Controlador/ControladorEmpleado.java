@@ -78,8 +78,11 @@ public class ControladorEmpleado implements ActionListener, Comunica{
             String ciudad = vistaEmpleado.txtCiudadResgitrarEmpleado.getText();
             String usuario = vistaEmpleado.txtUsuarioRegistrarEmpleado.getText();
             String pass = vistaEmpleado.txtPasswordRegistrarEmpleado.getText();
+            int tipo = vistaEmpleado.comboTipoEmpleado.getSelectedIndex();
+            
+            String tipoEmpleado = Integer.toString(tipo);
 
-            String rptaRegistro = modelo.inserteEmpleado(nombre, apellido, telefono, email, direccion, cp, ciudad, usuario, pass);
+            String rptaRegistro = modelo.inserteEmpleado(nombre, apellido, telefono, email, direccion, cp, ciudad, usuario, pass,tipoEmpleado);
 
             if (rptaRegistro != null && rptaRegistro.equals("Registro Exitoso")) {
                 JOptionPane.showMessageDialog(null, "El registro del Empleado " + nombre + " ha sido guardado con éxito");
