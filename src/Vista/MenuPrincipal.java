@@ -26,10 +26,12 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         setTitle("Pizzabrosa - Menú Principal");
         setLocationRelativeTo(null);
         setResizable(false);
+        
     }
 
   RegistrarClientes vc = new RegistrarClientes(this);
   RegistrarEmpleado ve = new RegistrarEmpleado(this);
+  EditarCliente ved = new EditarCliente(this);
     
     
     @SuppressWarnings("unchecked")
@@ -150,7 +152,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel1.setText("Pizzabrosa");
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\pizzabrosaPestaña.png")); // NOI18N
 
         botonCerrarSesion.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoCerrarSesión.png")); // NOI18N
 
@@ -176,7 +178,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
                         .addComponent(botonActualizar)
                         .addGap(29, 29, 29)
                         .addComponent(botonRegistrar)
-                        .addContainerGap(61, Short.MAX_VALUE))
+                        .addContainerGap(86, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +210,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
                         .addGap(11, 11, 11)
                         .addComponent(txtBusquedaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(botonRegistrar, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
         );
@@ -223,7 +225,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         usuarioLabel1.setText("Administrador");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel4.setText("Pizzabrosa");
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\pizzabrosaPestaña.png")); // NOI18N
 
         TablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -276,7 +278,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
                         .addComponent(botonActualizarEmpleado)
                         .addGap(26, 26, 26)
                         .addComponent(botonRegistrarEmpleado)
-                        .addContainerGap(78, Short.MAX_VALUE))
+                        .addContainerGap(103, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel3)
@@ -284,27 +286,35 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
                         .addComponent(usuarioLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
-                        .addGap(39, 39, 39)
+                        .addGap(18, 18, 18)
                         .addComponent(botonCerrarSesionEmpleado)
                         .addGap(27, 27, 27))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(usuarioLabel1)
-                        .addComponent(jLabel4))
-                    .addComponent(botonCerrarSesionEmpleado))
-                .addGap(27, 27, 27)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(usuarioLabel1))
+                                .addGap(77, 77, 77))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(botonCerrarSesionEmpleado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtBuscarEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonBuscarEmpleado)
                     .addComponent(botonActualizarEmpleado)
                     .addComponent(botonRegistrarEmpleado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38))
         );
@@ -319,7 +329,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         usuarioLabel2.setText("Administrador");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel6.setText("Pizzabrosa");
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\pizzabrosaPestaña.png")); // NOI18N
 
         tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -366,8 +376,9 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
                                 .addComponent(jLabel6)
-                                .addGap(43, 43, 43)
+                                .addGap(18, 18, 18)
                                 .addComponent(botonCerrarSesionProducto))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(botonBuscarProducto)
@@ -375,22 +386,28 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
                                 .addComponent(botonActualziarProducto)
                                 .addGap(18, 18, 18)
                                 .addComponent(botonRegistrarProducto)))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(usuarioLabel2)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(botonCerrarSesionProducto)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(usuarioLabel2))
+                                .addGap(0, 38, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel6)))
+                        .addGap(18, 18, 18))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(botonCerrarSesionProducto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(txtBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -417,7 +434,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         usuarioLabel3.setText("Administrador");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel8.setText("Pizzabrosa");
+        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\pizzabrosaPestaña.png")); // NOI18N
 
         TablaPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -472,7 +489,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
                         .addComponent(botonActualzarPedido)
                         .addGap(26, 26, 26)
                         .addComponent(botonRegistarPedido)))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -483,7 +500,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
                     .addComponent(jLabel7)
                     .addComponent(usuarioLabel3)
                     .addComponent(botonCerrarSesionPedido))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botonRegistarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -505,7 +522,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -539,7 +556,12 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
     }//GEN-LAST:event_botonActualizarActionPerformed
 
     private void editarPopUpClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarPopUpClientesActionPerformed
-        // TODO add your handling code here:
+        ClienteDAO modeloC = new ClienteDAO();
+        ControladorCliente controlaC = new ControladorCliente(ved, modeloC,this);
+        ved.setVisible(true);
+        ved.pack();
+        ved.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ved.setLocationRelativeTo(null);
     }//GEN-LAST:event_editarPopUpClientesActionPerformed
 
     private void botonRegistrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarEmpleadoActionPerformed
@@ -620,8 +642,8 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
     private javax.swing.JButton botonRegistrar;
     private javax.swing.JButton botonRegistrarEmpleado;
     private javax.swing.JButton botonRegistrarProducto;
-    private javax.swing.JMenuItem editarPopUpClientes;
-    private javax.swing.JMenuItem eliminarPopUpClientes;
+    public javax.swing.JMenuItem editarPopUpClientes;
+    public javax.swing.JMenuItem eliminarPopUpClientes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -642,7 +664,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JPopupMenu popup;
+    public javax.swing.JPopupMenu popup;
     private javax.swing.JTable tablaProductos;
     public javax.swing.JTable tablitaClientes;
     private javax.swing.JTextField txtBuscarEmpleado;

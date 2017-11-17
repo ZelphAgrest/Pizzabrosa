@@ -5,17 +5,21 @@
  */
 package Vista;
 
+import Controlador.Comunica;
+
 /**
  *
  * @author Zelph
  */
 public class EditarCliente extends javax.swing.JFrame {
 
-    /**
-     * Creates new form EditarCliente
-     */
-    public EditarCliente() {
+     Comunica miInterfazRemota;
+    public EditarCliente(Comunica comunicacion) {
         initComponents();
+        setTitle("Editar Cliente");
+        setLocationRelativeTo(null);
+        setResizable(false);
+        miInterfazRemota = comunicacion;
     }
 
     /**
@@ -63,7 +67,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel8.setText("Ciudad:");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("PIZZABROSA");
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\pizzabrosaPestaña.png")); // NOI18N
 
         botonGuardarEditarCliente.setText("Guardar");
 
@@ -74,43 +78,43 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8))
-                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtEmailEditarCliente)
-                    .addComponent(txtNombreEditarC)
-                    .addComponent(txtApellidoEditarCliente)
-                    .addComponent(txtTelefonoEditarCliente)
-                    .addComponent(txtDireccionEditarCliente)
-                    .addComponent(txtCPEditarClientes)
-                    .addComponent(txtCiudadEditarClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(134, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(41, 41, 41))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtEmailEditarCliente)
+                            .addComponent(txtNombreEditarC)
+                            .addComponent(txtApellidoEditarCliente)
+                            .addComponent(txtTelefonoEditarCliente)
+                            .addComponent(txtDireccionEditarCliente)
+                            .addComponent(txtCPEditarClientes)
+                            .addComponent(txtCiudadEditarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(134, 134, 134)
                         .addComponent(botonGuardarEditarCliente)
-                        .addGap(52, 52, 52)
-                        .addComponent(botonRegresarEditarCliente)
-                        .addGap(66, 66, 66))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonRegresarEditarCliente)))
+                .addGap(0, 48, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(21, 21, 21))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(51, 51, 51)
+                .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNombreEditarC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -138,18 +142,18 @@ public class EditarCliente extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txtCiudadEditarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonRegresarEditarCliente)
-                    .addComponent(botonGuardarEditarCliente))
-                .addContainerGap(45, Short.MAX_VALUE))
+                    .addComponent(botonGuardarEditarCliente)
+                    .addComponent(botonRegresarEditarCliente))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,14 +193,14 @@ public class EditarCliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditarCliente().setVisible(true);
+                //new EditarCliente().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonGuardarEditarCliente;
-    private javax.swing.JButton botonRegresarEditarCliente;
+    public javax.swing.JButton botonGuardarEditarCliente;
+    public javax.swing.JButton botonRegresarEditarCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -206,12 +210,12 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtApellidoEditarCliente;
-    private javax.swing.JTextField txtCPEditarClientes;
-    private javax.swing.JTextField txtCiudadEditarClientes;
-    private javax.swing.JTextField txtDireccionEditarCliente;
-    private javax.swing.JTextField txtEmailEditarCliente;
-    private javax.swing.JTextField txtNombreEditarC;
-    private javax.swing.JTextField txtTelefonoEditarCliente;
+    public javax.swing.JTextField txtApellidoEditarCliente;
+    public javax.swing.JTextField txtCPEditarClientes;
+    public javax.swing.JTextField txtCiudadEditarClientes;
+    public javax.swing.JTextField txtDireccionEditarCliente;
+    public javax.swing.JTextField txtEmailEditarCliente;
+    public javax.swing.JTextField txtNombreEditarC;
+    public javax.swing.JTextField txtTelefonoEditarCliente;
     // End of variables declaration//GEN-END:variables
 }
