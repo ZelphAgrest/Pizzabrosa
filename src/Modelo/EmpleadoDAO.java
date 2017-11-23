@@ -56,7 +56,7 @@ public class EmpleadoDAO {
         Empleado empleado;
         try {
             Connection accesoDB=conexion.getConexion();
-            PreparedStatement ps = accesoDB.prepareCall("select * from cliente");
+            PreparedStatement ps = accesoDB.prepareCall("select * from empleado");
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                  empleado= new Empleado();

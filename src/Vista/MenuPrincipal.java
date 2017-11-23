@@ -249,6 +249,11 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         botonBuscarEmpleado.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoBuscar.png")); // NOI18N
 
         botonActualizarEmpleado.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoActualizar.png")); // NOI18N
+        botonActualizarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActualizarEmpleadoActionPerformed(evt);
+            }
+        });
 
         botonRegistrarEmpleado.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoRegistrarUsuario.png")); // NOI18N
         botonRegistrarEmpleado.addActionListener(new java.awt.event.ActionListener() {
@@ -522,7 +527,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -550,6 +555,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
     }//GEN-LAST:event_botonRegistrarActionPerformed
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
+        System.out.println("boton click");
         ClienteDAO modeloD = new ClienteDAO();
         //MenuPrincipal adc = new MenuPrincipal();
         ControladorCliente controlaD = new ControladorCliente(this,modeloD);
@@ -572,6 +578,10 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         ve.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ve.setLocationRelativeTo(null);
     }//GEN-LAST:event_botonRegistrarEmpleadoActionPerformed
+
+    private void botonActualizarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarEmpleadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonActualizarEmpleadoActionPerformed
 
     /**
      * @param args the command line arguments

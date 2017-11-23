@@ -41,6 +41,26 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
         this.vistaEC.txtDireccionEditarCliente.addKeyListener(this);
         this.vistaEC.txtCPEditarClientes.addKeyListener(this);
         this.vistaEC.txtCiudadEditarClientes.addKeyListener(this);
+        //vistaEC.txtNombreEditarC.setText("prueba texto");
+        this.llenaCamposEdicionCliente();
+        
+    }
+    
+    public void llenaCamposEdicionCliente(){
+        int filaEditar = vistaAdmin.tablitaClientes.getSelectedRow();
+            int numFS = vistaAdmin.tablitaClientes.getSelectedRowCount();
+            if (filaEditar >= 0 && numFS == 1) {
+                vistaEC.txtNombreEditarC.setText((String) vistaAdmin.tablitaClientes.getValueAt(filaEditar, 0));
+                vistaEC.txtApellidoEditarCliente.setText((String) vistaAdmin.tablitaClientes.getValueAt(filaEditar, 1));
+                vistaEC.txtTelefonoEditarCliente.setText((String) vistaAdmin.tablitaClientes.getValueAt(filaEditar, 2));
+                vistaEC.txtEmailEditarCliente.setText((String) vistaAdmin.tablitaClientes.getValueAt(filaEditar, 3));
+                vistaEC.txtDireccionEditarCliente.setText((String) vistaAdmin.tablitaClientes.getValueAt(filaEditar, 4));
+                vistaEC.txtCPEditarClientes.setText((String) vistaAdmin.tablitaClientes.getValueAt(filaEditar, 5));
+                vistaEC.txtCiudadEditarClientes.setText((String) vistaAdmin.tablitaClientes.getValueAt(filaEditar, 6));
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una fila o al menos una");
+            }
     }
 
     public ControladorCliente(MenuPrincipal vistaAdmin, ClienteDAO modelo) {
@@ -50,7 +70,7 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
         this.vistaAdmin.editarPopUpClientes.addActionListener(this);
         this.vistaAdmin.eliminarPopUpClientes.addActionListener(this);
         this.vistaAdmin.botonBuscar.addActionListener(this);
-
+        LlenarTabla(this.vistaAdmin.tablitaClientes);
     }
 
     public void inicializar() {
@@ -186,19 +206,48 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getSource() == vistaEC.txtNombreEditarC || e.getSource() == vistaEC.txtApellidoEditarCliente || e.getSource() == vistaEC.txtCiudadEditarClientes) {
+            System.out.println("entra key");
+            char c = e.getKeyChar();
+            if ((c<'a' || c>'z')&& (c<'A' || c>'Z') &&c !='ñ'&&c!='Ñ'&&c !='á'&&c !='é'&&c !='í'&&c !='ó'&&c !='ú'&&c !='Á' &&c !='É'&&c !='Í'&&c !='Ó'&&c !='Ú'&&(c!=(char)KeyEvent.VK_BACK_SPACE)&&(c!=(char)KeyEvent.VK_SPACE)) {
+                System.out.println("entra key if");
+                e.consume();
+            }
+        }
+        if (e.getSource() == vistaEC.txtTelefonoEditarCliente || e.getSource() == vistaEC.txtCPEditarClientes) {
+            char c = e.getKeyChar();
+            if ((c < '0' || c > '9')) {
+                e.consume();
+            }
+        }    
+
+        if(e.getSource() == vistaEC.txtTelefonoEditarCliente){
+            String caracteres = vistaEC.txtTelefonoEditarCliente.getText();
+            if (caracteres.length() >= 10) {
+                e.consume();
+            }
+        }
+        
+        String Caracteres2 = vistaEC.txtCPEditarClientes.getText();//arreglar
+        if (Caracteres2.length() >= 5) {
+            e.consume();
+
+        }
+        
+/*
+        if (e.getSource() == vistaEC.txtNombreEditarC || e.getSource() == vistaEC.txtApellidoEditarCliente || e.getSource() == vistaEC.txtCiudadEditarClientes) {
             char c = e.getKeyChar();
             if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != (char) KeyEvent.VK_SPACE)) {
                 e.consume();
             }
         }
-        if (e.getSource() == vistaEC.txtTelefonoEditarCliente || e.getSource() == vistaEC.txtNombreEditarC) {
+        if (e.getSource() == vistaEC.txtTelefonoEditarCliente || e.getSource() == vistaEC.txtCPEditarClientes) {
             char c = e.getKeyChar();
             if ((c < '0' || c > '9')) {
                 e.consume();
             }
 
         }
-        String Caracteres = vistaEC.txtTelefonoEditarCliente.getText();
+        Caracteres = vistaEC.txtTelefonoEditarCliente.getText();
         if (Caracteres.length() >= 10) {
             e.consume();
 
@@ -207,37 +256,13 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
         if (Caracteres.length() >= 5) {
             e.consume();
 
-        }
-
-        if (e.getSource() == vista.txtNombre || e.getSource() == vista.txtApellido || e.getSource() == vista.txtCiudad) {
-            char c = e.getKeyChar();
-            if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != (char) KeyEvent.VK_SPACE)) {
-                e.consume();
-            }
-        }
-        if (e.getSource() == vista.txtTelefono || e.getSource() == vista.txtCP) {
-            char c = e.getKeyChar();
-            if ((c < '0' || c > '9')) {
-                e.consume();
-            }
-
-        }
-        Caracteres = vista.txtTelefono.getText();
-        if (Caracteres.length() >= 10) {
-            e.consume();
-
-        }
-        Caracteres = vista.txtCP.getText();
-        if (Caracteres.length() >= 5) {
-            e.consume();
-
-        }
+        }*/
 
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
