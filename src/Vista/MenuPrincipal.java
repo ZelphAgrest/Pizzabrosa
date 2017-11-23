@@ -564,6 +564,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
     private void editarPopUpClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarPopUpClientesActionPerformed
         ClienteDAO modeloC = new ClienteDAO();
         ControladorCliente controlaC = new ControladorCliente(ved, modeloC,this);
+        
         ved.setVisible(true);
         ved.pack();
         ved.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

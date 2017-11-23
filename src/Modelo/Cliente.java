@@ -5,10 +5,18 @@ package Modelo;
 public class Cliente {
     
     String nombre,apellido,telefono,email,direccion,codigopostal,ciudad;
+    int idCliente;
 
     public Cliente() {
     }
 
+   public int getidCliente(){
+       return idCliente;
+   }
+   
+   public void setidCliente(int idCliente){
+   this.idCliente = idCliente;
+   }
    
     public String getNombre() {
         return nombre;

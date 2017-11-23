@@ -46,6 +46,7 @@ public class ClienteDAO {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                  cliente= new Cliente();
+                 cliente.setidCliente(rs.getInt(1));
                  cliente.setNombre(rs.getString(2));
                  cliente.setApellido(rs.getString(3));
                  cliente.setTelefono(rs.getString(4));
@@ -63,19 +64,20 @@ public class ClienteDAO {
         
     }
     
-    public String editaCliente(String nombre,String apellido, String telefono, String email, String direccion, String codigopostal, String ciudad){
+    public String editaCliente(String idcliente,String nombre,String apellido, String telefono, String email, String direccion, String codigopostal, String ciudad){
         String rptaRegistro=null;
         try {
             Connection accesoDB = conexion.getConexion();
-            CallableStatement cs= accesoDB.prepareCall("call sp_editaCliente(?,?,?,?,?,?,?)");
+            CallableStatement cs= accesoDB.prepareCall("call sp_editaCliente(?,?,?,?,?,?,?,?)");
             
-            cs.setString(1, nombre);
-            cs.setString(2, apellido);
-            cs.setString(3, telefono);
-            cs.setString(4, email);
-            cs.setString(5, direccion);
-            cs.setString(6, codigopostal);
-            cs.setString(7, ciudad);
+            cs.setString(1, idcliente);
+            cs.setString(2, nombre);
+            cs.setString(3, apellido);
+            cs.setString(4, telefono);
+            cs.setString(5, email);
+            cs.setString(6, direccion);
+            cs.setString(7, codigopostal);
+            cs.setString(8, ciudad);
             
             int numFAfectadas = cs.executeUpdate();
             System.out.println("Filas afectadas "+numFAfectadas);
