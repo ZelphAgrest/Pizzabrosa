@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista;
 
 import Controlador.Comunica;
@@ -12,11 +8,15 @@ import Modelo.ClienteDAO;
 import Modelo.EmpleadoDAO;
 import javax.swing.JFrame;
 
-/**
- *
- * @author Zelph
- */
-public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
+
+public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
+    
+   
+    ClienteDAO modelo;
+    EmpleadoDAO modeloE;
+    ControladorCliente controlador;
+    ControladorEmpleado controladorE;
+    
 
     /**
      * Creates new form AdminCliente
@@ -26,14 +26,9 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         setTitle("Pizzabrosa - Menú Principal");
         setLocationRelativeTo(null);
         setResizable(false);
-        
+        this.iniciaClase();
     }
 
-  RegistrarClientes vc = new RegistrarClientes(this);
-  RegistrarEmpleado ve = new RegistrarEmpleado(this);
-  EditarCliente ved = new EditarCliente(this);
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -142,7 +137,18 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
             }
         });
 
+        txtBusquedaCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBusquedaClienteKeyReleased(evt);
+            }
+        });
+
         botonBuscar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoBuscar.png")); // NOI18N
+        botonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarActionPerformed(evt);
+            }
+        });
 
         botonRegistrar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoRegistrarUsuario.png")); // NOI18N
         botonRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -543,11 +549,19 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Método de inicialización
+    private void iniciaClase() {
+        modelo = new ClienteDAO();
+        controlador = new ControladorCliente(this, modelo);
+        modeloE=new EmpleadoDAO();
+        //controladorE = new ControladorEmpleado(ve, modeloE);
+    }
+    
+    
     private void botonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarActionPerformed
-        
-        ClienteDAO modeloC = new ClienteDAO();
-        ControladorCliente controlaC = new ControladorCliente(vc, modeloC);
+        RegistrarClientes vc = new RegistrarClientes(this);
+        controlador.vinculaRegistroClientes(vc);
         vc.setVisible(true);
         vc.pack();
         vc.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -555,16 +569,12 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
     }//GEN-LAST:event_botonRegistrarActionPerformed
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
-        System.out.println("boton click");
-        ClienteDAO modeloD = new ClienteDAO();
-        //MenuPrincipal adc = new MenuPrincipal();
-        ControladorCliente controlaD = new ControladorCliente(this,modeloD);
+        controlador.LlenarTabla(tablitaClientes);
     }//GEN-LAST:event_botonActualizarActionPerformed
 
     private void editarPopUpClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarPopUpClientesActionPerformed
-        ClienteDAO modeloC = new ClienteDAO();
-        ControladorCliente controlaC = new ControladorCliente(ved, modeloC,this);
-        
+        EditarCliente ved = new EditarCliente(this);
+        controlador.vinculaEditaClientes(ved, this);
         ved.setVisible(true);
         ved.pack();
         ved.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -572,8 +582,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
     }//GEN-LAST:event_editarPopUpClientesActionPerformed
 
     private void botonRegistrarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarEmpleadoActionPerformed
-        EmpleadoDAO modeloE = new EmpleadoDAO();
-        ControladorEmpleado controlaE = new ControladorEmpleado(ve, modeloE);
+        RegistrarEmpleado ve = new RegistrarEmpleado(this);
         ve.setVisible(true);
         ve.pack();
         ve.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -584,49 +593,19 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
         // TODO add your handling code here:
     }//GEN-LAST:event_botonActualizarEmpleadoActionPerformed
 
+    private void txtBusquedaClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaClienteKeyReleased
+        
+    }//GEN-LAST:event_txtBusquedaClienteKeyReleased
+
+    private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+       
+    }//GEN-LAST:event_botonBuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
+       
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MenuPrincipal().setVisible(true);
@@ -686,4 +665,11 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica{
     private javax.swing.JLabel usuarioLabel2;
     private javax.swing.JLabel usuarioLabel3;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void llenarTablaInterfaz() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+  
 }

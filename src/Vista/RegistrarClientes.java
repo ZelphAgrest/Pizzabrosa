@@ -13,7 +13,7 @@ import Controlador.Comunica;
  */
 public class RegistrarClientes extends javax.swing.JFrame {
 
-    Comunica miInterfazRemota;
+   Comunica miInterfazRemota;
     
     public RegistrarClientes(Comunica comunicacion) {
         initComponents();
@@ -78,6 +78,11 @@ public class RegistrarClientes extends javax.swing.JFrame {
         });
 
         botonRegresar.setText("Regresar");
+        botonRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -168,8 +173,12 @@ public class RegistrarClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
-        // TODO add your handling code here:
+        miInterfazRemota.llenarTablaInterfaz();
     }//GEN-LAST:event_botonGuardarActionPerformed
+
+    private void botonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegresarActionPerformed
+        miInterfazRemota.llenarTablaInterfaz();
+    }//GEN-LAST:event_botonRegresarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -114,17 +114,18 @@ public class ClienteDAO {
             Connection accesoDB = conexion.getConexion();
             CallableStatement cs= accesoDB.prepareCall("call sp_buscaCxApellido(?)");
             
-            cs.setString(1, apellido);
+            cs.setString(1, apellido+'%');
             ResultSet rs = cs.executeQuery();
             while(rs.next()){
                 cliente = new Cliente();
-                cliente.setNombre(rs.getString(1));
-                cliente.setApellido(rs.getString(2));
-                cliente.setTelefono(rs.getString(3));
-                cliente.setEmail(rs.getString(4));
-                cliente.setDireccion(rs.getString(5));
-                cliente.setCodigopostal(rs.getString(6));
-                cliente.setCiudad(rs.getString(7));
+                cliente.setidCliente(1);
+                cliente.setNombre(rs.getString(2));
+                cliente.setApellido(rs.getString(3));
+                cliente.setTelefono(rs.getString(4));
+                cliente.setEmail(rs.getString(5));
+                cliente.setDireccion(rs.getString(6));
+                cliente.setCodigopostal(rs.getString(7));
+                cliente.setCiudad(rs.getString(8));
                 listaClientes.add(cliente);
             
             

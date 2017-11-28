@@ -98,6 +98,11 @@ public class ControladorEmpleado implements ActionListener, Comunica{
             vistaEmpleado.setVisible(false);
         }
      }
+
+    @Override
+    public void llenarTablaInterfaz() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
      
     
 }
