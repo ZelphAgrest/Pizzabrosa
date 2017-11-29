@@ -2,6 +2,7 @@ package Vista;
 
 import Controlador.ControladorInicioDeSesion;
 import Modelo.InicioDeSesionDAO;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class InicioSesion extends javax.swing.JFrame {
@@ -144,18 +145,18 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_botonSalirActionPerformed
 
     private void campoPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPasswordKeyPressed
-        if (evt.getKeyCode()==10 && !campoUsuario.getText().equals("") && !campoPassword.getText().equals("")){
-            controlador.IniciarSesion(this);
-        }else{
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER && ( campoUsuario.getText().equals("") || campoPassword.getText().equals(""))){
             JOptionPane.showMessageDialog(null, "Escriba el usuario y/o contraseña");
+        }else if(evt.getKeyCode()==KeyEvent.VK_ENTER && ( !campoUsuario.getText().equals("") || !campoPassword.getText().equals(""))){ 
+            controlador.IniciarSesion(this);
         }
     }//GEN-LAST:event_campoPasswordKeyPressed
 
     private void campoUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoUsuarioKeyPressed
-        if (evt.getKeyCode()==10 && !campoUsuario.getText().equals("") && !campoPassword.getText().equals("")){
-            controlador.IniciarSesion(this);
-        }else{
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER && ( campoUsuario.getText().equals("") || campoPassword.getText().equals(""))){
             JOptionPane.showMessageDialog(null, "Escriba el usuario y/o contraseña");
+        }else if(evt.getKeyCode()==KeyEvent.VK_ENTER && ( !campoUsuario.getText().equals("") || !campoPassword.getText().equals(""))){ 
+            controlador.IniciarSesion(this);
         }
     }//GEN-LAST:event_campoUsuarioKeyPressed
 

@@ -1,8 +1,9 @@
 
 package pizzabrosa;
 
-import Modelo.ClienteDAO;
-import Vista.MenuPrincipal;
+
+import Vista.InicioSesion;
+
 
 
 
@@ -11,7 +12,7 @@ public class Pizzabrosa {
    
     public static void main(String[] args) {
        
-        new MenuPrincipal().setVisible(true);
+         new InicioSesion().setVisible(true);
        
     
     }
