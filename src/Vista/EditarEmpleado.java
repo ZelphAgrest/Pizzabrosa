@@ -19,7 +19,7 @@ public class EditarEmpleado extends javax.swing.JFrame {
     Comunica miInterfazRemota;
     public EditarEmpleado(Comunica comunicacion) {
         initComponents();
-        setTitle("Editar Cliente");
+        setTitle("Editar Empleado");
         setLocationRelativeTo(null);
         setResizable(false);
         miInterfazRemota = comunicacion;

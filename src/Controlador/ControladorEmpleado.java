@@ -33,7 +33,6 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
         this.modelo = modelo;
         this.vistaAdmin = vistaAdmin;
         this.vistaAdmin.botonActualizar.addActionListener(this);
-        //this.vistaAdmin.editarPopUpEmpleados.addActionListener(this);
         this.vistaAdmin.eliminarPopUpEmpleados.addActionListener(this);
         this.vistaAdmin.txtBuscarEmpleado.addKeyListener(this);
         LlenarTablaEmpleado(this.vistaAdmin.TablaEmpleados);
@@ -138,7 +137,14 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
             columna[7] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getCiudad();
             columna[8] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getUsuario();
             columna[9] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getPassword();
-            columna[10] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getIdTipoEmpleado();
+            //columna[10] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getIdTipoEmpleado();
+            int num = modelo.buscarEmpleadoApellidos(apellidos).get(i).getIdTipoEmpleado();
+            if (num == 1) {
+                columna[10] = "Cajero";
+            }
+            if (num == 2) {
+                columna[10] = "Gerente";
+            }
             modeloT.addRow(columna);
 
             vistaAdmin.TablaEmpleados.getColumnModel().getColumn(0).setMaxWidth(0);
