@@ -5,17 +5,22 @@
  */
 package Vista;
 
+import Controlador.Comunica;
+
 /**
  *
  * @author Zelph
  */
 public class RegistrarProductos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form RegistrarProductos
-     */
-    public RegistrarProductos() {
+    Comunica miInterfazRemota;
+    
+    public RegistrarProductos(Comunica comunicacion) {
         initComponents();
+        setTitle("Registrar Producto");
+        setLocationRelativeTo(null);
+        setResizable(false);
+        miInterfazRemota = comunicacion;
     }
 
     /**
@@ -47,9 +52,13 @@ public class RegistrarProductos extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\pizzabrosaPestaña.png")); // NOI18N
 
         botonGuardarRegistrarProducto.setText("Guardar");
+        botonGuardarRegistrarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGuardarRegistrarProductoActionPerformed(evt);
+            }
+        });
 
         botonRegresarRegistrarProducto.setText("Regresar");
 
@@ -160,6 +169,10 @@ public class RegistrarProductos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botonGuardarRegistrarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarRegistrarProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonGuardarRegistrarProductoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -190,15 +203,15 @@ public class RegistrarProductos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegistrarProductos().setVisible(true);
+                //new RegistrarProductos().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonGuardarRegistrarProducto;
-    private javax.swing.JButton botonRegresarRegistrarProducto;
-    private javax.swing.JComboBox<String> comborestriccionesRegistrarProductos;
+    public javax.swing.JButton botonGuardarRegistrarProducto;
+    public javax.swing.JButton botonRegresarRegistrarProducto;
+    public javax.swing.JComboBox<String> comborestriccionesRegistrarProductos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -207,10 +220,10 @@ public class RegistrarProductos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner spinnerCantidadRegistrarProductos;
-    private javax.swing.JTextField txtCodigoRegistrarProductos;
-    private javax.swing.JTextField txtDescripcionRegistrarProductos;
-    private javax.swing.JTextField txtNombreregistrarProductos;
-    private javax.swing.JTextField txtPrecioRegistrarProductos;
+    public javax.swing.JSpinner spinnerCantidadRegistrarProductos;
+    public javax.swing.JTextField txtCodigoRegistrarProductos;
+    public javax.swing.JTextField txtDescripcionRegistrarProductos;
+    public javax.swing.JTextField txtNombreregistrarProductos;
+    public javax.swing.JTextField txtPrecioRegistrarProductos;
     // End of variables declaration//GEN-END:variables
 }
