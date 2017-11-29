@@ -173,11 +173,11 @@ public class RegistrarClientes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
-        miInterfazRemota.llenarTablaInterfaz();
+        
     }//GEN-LAST:event_botonGuardarActionPerformed
 
     private void botonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegresarActionPerformed
-        miInterfazRemota.llenarTablaInterfaz();
+        
     }//GEN-LAST:event_botonRegresarActionPerformed
 
     /**

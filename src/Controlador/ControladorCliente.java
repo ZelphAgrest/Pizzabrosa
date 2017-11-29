@@ -45,7 +45,7 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
         this.vistaAdmin.botonActualizar.addActionListener(this);
         this.vistaAdmin.editarPopUpClientes.addActionListener(this);
         this.vistaAdmin.eliminarPopUpClientes.addActionListener(this);
-        this.vistaAdmin.botonBuscar.addActionListener(this);
+       // this.vistaAdmin.botonBuscar.addActionListener(this);
         this.vistaAdmin.txtBusquedaCliente.addKeyListener(this);
         LlenarTabla(this.vistaAdmin.tablitaClientes);
     }
@@ -96,7 +96,7 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
             vistaEC.txtCiudadEditarClientes.setText((String) vistaAdmin.tablitaClientes.getValueAt(filaEditar, 7));
 
         } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar una fila o al menos una");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un Cliente");
         }
     }
 
@@ -185,7 +185,7 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
     //Action Performed de los botones (Aquí se realizan las Acciones de cada botón)
     @Override
     public void actionPerformed(ActionEvent e) {
-
+//Guardar el registro de clientes
         if (e.getSource() == vista.botonGuardar) {
             String nombre = vista.txtNombre.getText();
             String apellido = vista.txtApellido.getText();
@@ -224,7 +224,7 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
             LlenarTabla(vistaAdmin.tablitaClientes);
 
         }
-
+//Regresa del registro de clientes
         if (e.getSource() == vista.botonRegresar) {
             vista.setVisible(false);
             vista.txtNombre.setText("");
@@ -236,11 +236,11 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
             vista.txtCiudad.setText("");
 
         }
-
+//Regresa de la edición de clientes
         if (e.getSource() == vistaEC.botonRegresarEditarCliente) {
             vistaEC.setVisible(false);
         }
-
+//Guarda la edición de clientes
         if (e.getSource() == vistaEC.botonGuardarEditarCliente) {
 
             String idcliente = vistaEC.txtIdClienteEditarCliente.getText();
@@ -262,6 +262,7 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
                 JOptionPane.showMessageDialog(null, "Ocurrio un error al editar el registro");
             }
         }
+//Eliminar Clientes
         if (e.getSource() == vistaAdmin.eliminarPopUpClientes) {
             int filaInicio = vistaAdmin.tablitaClientes.getSelectedRow();
             int numFS = vistaAdmin.tablitaClientes.getSelectedRowCount();
@@ -272,9 +273,10 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
                     id = String.valueOf(vistaAdmin.tablitaClientes.getValueAt(i + filaInicio, 0));
                     nombre = String.valueOf(vistaAdmin.tablitaClientes.getValueAt(i + filaInicio, 1));
 
-                    int rptaUsuario = JOptionPane.showConfirmDialog(null, "¿Quiere eliminar el registro del cliente " + nombre + "?");
+                    int rptaUsuario = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar el registro del Cliente " + nombre + "?");
                     if (rptaUsuario == 0) {
                         modelo.eliminarCliente(id);
+                        JOptionPane.showMessageDialog(null, "El registro del Cliente " + nombre + " ha sido Eliminado con éxito");
                     }
                 }
                 LlenarTabla(vistaAdmin.tablitaClientes);
@@ -293,10 +295,8 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getSource() == vistaEC.txtNombreEditarC || e.getSource() == vistaEC.txtApellidoEditarCliente || e.getSource() == vistaEC.txtCiudadEditarClientes) {
-            System.out.println("entra key");
             char c = e.getKeyChar();
             if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && c != 'ñ' && c != 'Ñ' && c != 'á' && c != 'é' && c != 'í' && c != 'ó' && c != 'ú' && c != 'Á' && c != 'É' && c != 'Í' && c != 'Ó' && c != 'Ú' && (c != (char) KeyEvent.VK_BACK_SPACE) && (c != (char) KeyEvent.VK_SPACE)) {
-                System.out.println("entra key if");
                 e.consume();
             }
         }
@@ -314,7 +314,7 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
             }
         }
         if (e.getSource() == vistaEC.txtCPEditarClientes) {
-            String Caracteres2 = vistaEC.txtCPEditarClientes.getText();//arreglar
+            String Caracteres2 = vistaEC.txtCPEditarClientes.getText();
             if (Caracteres2.length() >= 5) {
                 e.consume();
 
@@ -357,16 +357,12 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
 
     @Override
     public void keyReleased(KeyEvent e) {
-        System.out.println("Entra al KeyEvent");
         if (e.getSource() == vistaAdmin.txtBusquedaCliente) {
-            System.out.println("realiza el método de búsqueda");
             busquedaCliente();
+            System.out.println("Escuchando el evento XD");
         }
     }
 
-    @Override
-    public void llenarTablaInterfaz() {
-        LlenarTabla(vistaAdmin.tablitaClientes);
-    }
+   
 
 }

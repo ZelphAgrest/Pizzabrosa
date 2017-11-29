@@ -78,7 +78,7 @@ Comunica miInterfazRemota;
 
         jLabel12.setText("Tipo de Empleado:");
 
-        comboTipoEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una opción", "Cajero", "Gerente" }));
+        comboTipoEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una opción", "Cajero", "Gerente" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

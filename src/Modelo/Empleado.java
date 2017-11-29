@@ -11,8 +11,24 @@ package Modelo;
  */
 public class Empleado {
      String nombre,apellido,telefono,email,direccion,codigopostal,ciudad, usuario, password;
+     int idEmpleado,idTipoEmpleado;
 
+    public int getIdTipoEmpleado() {
+        return idTipoEmpleado;
+    }
+
+    public void setIdTipoEmpleado(int idTipoEmpleado) {
+        this.idTipoEmpleado = idTipoEmpleado;
+    }
     public Empleado() {
+    }
+
+    public int getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(int idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public String getNombre() {
