@@ -326,6 +326,9 @@
                       <Image iconType="2" name="C:\Users\Zelph\Documents\NetBeansProjects\PizzabrosaV1.0\src\Imagenes\iconoCerrarSesi&#xf3;n.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCerrarSesionActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel2">
                   <Properties>
@@ -543,6 +546,9 @@
                       <Image iconType="2" name="C:\Users\Zelph\Documents\NetBeansProjects\PizzabrosaV1.0\src\Imagenes\iconoCerrarSesi&#xf3;n.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCerrarSesionEmpleadoActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel9">
                   <Properties>
@@ -693,20 +699,27 @@
                     <Component class="javax.swing.JTable" name="tablaProductos">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="6" rowCount="10">
+                          <Table columnCount="7" rowCount="10">
+                            <Column editable="true" title="ID Producto" type="java.lang.Object"/>
                             <Column editable="true" title="Nombre" type="java.lang.Object"/>
                             <Column editable="true" title="C&#xf3;digo" type="java.lang.Object"/>
                             <Column editable="true" title="Descripci&#xf3;n" type="java.lang.Object"/>
                             <Column editable="true" title="Precio" type="java.lang.Object"/>
-                            <Column editable="true" title="Restricciones" type="java.lang.Object"/>
                             <Column editable="true" title="Cantidad" type="java.lang.Object"/>
+                            <Column editable="true" title="Restricciones" type="java.lang.Object"/>
                           </Table>
                         </Property>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
                 <Component class="javax.swing.JTextField" name="txtBuscarProducto">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="botonActualziarProducto">
                   <Properties>
@@ -714,6 +727,12 @@
                       <Image iconType="2" name="C:\Users\Zelph\Documents\NetBeansProjects\PizzabrosaV1.0\src\Imagenes\IconoActualizar.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonActualziarProductoActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="botonRegistrarProducto">
                   <Properties>
@@ -721,6 +740,12 @@
                       <Image iconType="2" name="C:\Users\Zelph\Documents\NetBeansProjects\PizzabrosaV1.0\src\Imagenes\iconoAgregarProducto.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonRegistrarProductoActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="botonCerrarSesionProducto">
                   <Properties>
@@ -728,6 +753,12 @@
                       <Image iconType="2" name="C:\Users\Zelph\Documents\NetBeansProjects\PizzabrosaV1.0\src\Imagenes\iconoCerrarSesi&#xf3;n.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCerrarSesionProductoActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel15">
                   <Properties>
@@ -906,6 +937,9 @@
                       <Image iconType="2" name="C:\Users\Zelph\Documents\NetBeansProjects\PizzabrosaV1.0\src\Imagenes\iconoCerrarSesi&#xf3;n.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonCerrarSesionPedidoActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel16">
                   <Properties>

@@ -3,16 +3,20 @@ package Vista;
 import Controlador.Comunica;
 import Controlador.ControladorCliente;
 import Controlador.ControladorEmpleado;
+import Controlador.ControladorProducto;
 import Modelo.ClienteDAO;
 import Modelo.EmpleadoDAO;
+import Modelo.ProductoDAO;
 import javax.swing.JFrame;
 
 public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
 
     ClienteDAO modelo;
     EmpleadoDAO modeloE;
+    ProductoDAO modeloP;
     ControladorCliente controlador;
     ControladorEmpleado controladorE;
+    ControladorProducto controladorP;
     
 
     /**
@@ -178,6 +182,11 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\pizzabrosaPestaña.png")); // NOI18N
 
         botonCerrarSesion.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoCerrarSesión.png")); // NOI18N
+        botonCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarSesionActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Bienvenido:");
@@ -306,6 +315,11 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         });
 
         botonCerrarSesionEmpleado.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoCerrarSesión.png")); // NOI18N
+        botonCerrarSesionEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarSesionEmpleadoActionPerformed(evt);
+            }
+        });
 
         jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoBuscar.png")); // NOI18N
 
@@ -387,28 +401,43 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
 
         tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Código", "Descripción", "Precio", "Restricciones", "Cantidad"
+                "ID Producto", "Nombre", "Código", "Descripción", "Precio", "Cantidad", "Restricciones"
             }
         ));
         jScrollPane3.setViewportView(tablaProductos);
 
         botonActualziarProducto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoActualizar.png")); // NOI18N
+        botonActualziarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActualziarProductoActionPerformed(evt);
+            }
+        });
 
         botonRegistrarProducto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoAgregarProducto.png")); // NOI18N
+        botonRegistrarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistrarProductoActionPerformed(evt);
+            }
+        });
 
         botonCerrarSesionProducto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoCerrarSesión.png")); // NOI18N
+        botonCerrarSesionProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarSesionProductoActionPerformed(evt);
+            }
+        });
 
         jLabel15.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoBuscar.png")); // NOI18N
 
@@ -514,6 +543,11 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         botonRegistarPedido.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\Iconopedidos.png")); // NOI18N
 
         botonCerrarSesionPedido.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoCerrarSesión.png")); // NOI18N
+        botonCerrarSesionPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarSesionPedidoActionPerformed(evt);
+            }
+        });
 
         jLabel16.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoBuscar.png")); // NOI18N
 
@@ -615,6 +649,8 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         controlador = new ControladorCliente(this, modelo);
         modeloE = new EmpleadoDAO();
         controladorE = new ControladorEmpleado(this, modeloE);
+        modeloP= new ProductoDAO();
+        controladorP = new ControladorProducto(this, modeloP);
         
     }
 
@@ -630,6 +666,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
         controlador.LlenarTabla(tablitaClientes);
+        txtBusquedaCliente.setText("");
     }//GEN-LAST:event_botonActualizarActionPerformed
 
     private void editarPopUpClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarPopUpClientesActionPerformed
@@ -652,6 +689,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
 
     private void botonActualizarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarEmpleadoActionPerformed
         controladorE.LlenarTablaEmpleado(TablaEmpleados);
+        txtBuscarEmpleado.setText("");
     }//GEN-LAST:event_botonActualizarEmpleadoActionPerformed
 
     private void txtBusquedaClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaClienteKeyReleased
@@ -666,6 +704,41 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         vee.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         vee.setLocationRelativeTo(null);
     }//GEN-LAST:event_editarPopUpEmpleadosActionPerformed
+
+    private void botonRegistrarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarProductoActionPerformed
+        RegistrarProductos vrp = new RegistrarProductos(this);
+        controladorP.llenarCombo(vrp);
+        controladorP.VinculaRegistroProducto(vrp);
+        vrp.setVisible(true);
+        vrp.pack();
+        vrp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        vrp.setLocationRelativeTo(null);
+    }//GEN-LAST:event_botonRegistrarProductoActionPerformed
+
+    private void botonActualziarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualziarProductoActionPerformed
+        controladorP.LlenarTablaProductos(tablaProductos);
+        txtBuscarProducto.setText("");
+    }//GEN-LAST:event_botonActualziarProductoActionPerformed
+
+    private void botonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarSesionActionPerformed
+       dispose();
+        new InicioSesion().setVisible(true);
+    }//GEN-LAST:event_botonCerrarSesionActionPerformed
+
+    private void botonCerrarSesionEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarSesionEmpleadoActionPerformed
+        dispose();
+        new InicioSesion().setVisible(true);
+    }//GEN-LAST:event_botonCerrarSesionEmpleadoActionPerformed
+
+    private void botonCerrarSesionProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarSesionProductoActionPerformed
+        dispose();
+        new InicioSesion().setVisible(true);
+    }//GEN-LAST:event_botonCerrarSesionProductoActionPerformed
+
+    private void botonCerrarSesionPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarSesionPedidoActionPerformed
+        dispose();
+        new InicioSesion().setVisible(true);
+    }//GEN-LAST:event_botonCerrarSesionPedidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -685,15 +758,15 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
     public javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonActualizarEmpleado;
     private javax.swing.JButton botonActualzarPedido;
-    private javax.swing.JButton botonActualziarProducto;
+    public javax.swing.JButton botonActualziarProducto;
     private javax.swing.JButton botonCerrarSesion;
     private javax.swing.JButton botonCerrarSesionEmpleado;
     private javax.swing.JButton botonCerrarSesionPedido;
-    private javax.swing.JButton botonCerrarSesionProducto;
+    public javax.swing.JButton botonCerrarSesionProducto;
     private javax.swing.JButton botonRegistarPedido;
     private javax.swing.JButton botonRegistrar;
     private javax.swing.JButton botonRegistrarEmpleado;
-    private javax.swing.JButton botonRegistrarProducto;
+    public javax.swing.JButton botonRegistrarProducto;
     public javax.swing.JMenuItem editarPopUpClientes;
     public javax.swing.JMenuItem editarPopUpEmpleados;
     public javax.swing.JMenuItem eliminarPopUpClientes;
@@ -730,10 +803,10 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
     private javax.swing.JTextField jTextField1;
     public javax.swing.JPopupMenu popup;
     private javax.swing.JPopupMenu popupEmpleado;
-    private javax.swing.JTable tablaProductos;
+    public javax.swing.JTable tablaProductos;
     public javax.swing.JTable tablitaClientes;
     public javax.swing.JTextField txtBuscarEmpleado;
-    private javax.swing.JTextField txtBuscarProducto;
+    public javax.swing.JTextField txtBuscarProducto;
     public javax.swing.JTextField txtBusquedaCliente;
     private javax.swing.JLabel usuarioLabel;
     private javax.swing.JLabel usuarioLabel1;

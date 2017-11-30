@@ -22,11 +22,30 @@ public class ProductoDAO {
         conexion =new Conexion();    
     }
     
+    //Obtener las restricciones
+    public ArrayList<String> consultarRestricciones(){
+        ArrayList<String> listarestricciones = new ArrayList();
+        try{
+        Connection accesoDB = conexion.getConexion();
+        CallableStatement cs= accesoDB.prepareCall("select * from restricciones");
+       
+        ResultSet rs=cs.executeQuery();
+       
+        while (rs.next()){
+            listarestricciones.add(rs.getString(2));
+            } 
+        }catch(Exception e){
+           e.printStackTrace();     
+        }
+        return listarestricciones;
+    }
+    
+    
     public String insertarProducto(String nombre, String codigo, String descripcion, String precio, String cantidad, String idRestriccion ){
         String rptaRegistro=null;
         try {
             Connection accesoDB = conexion.getConexion();
-            CallableStatement cs= accesoDB.prepareCall("call sp_(?,?,?,?,?,?)");
+            CallableStatement cs= accesoDB.prepareCall("call sp_insertProducto(?,?,?,?,?,?)");
             
             cs.setString(1, nombre);
             cs.setString(2, codigo);
@@ -57,13 +76,13 @@ public class ProductoDAO {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                  producto= new Producto();
-                 producto.setNombre(rs.getString(1));
-                 producto.setCodigo(rs.getInt(2));
-                 producto.setDescripcion(rs.getString(3));
-                 producto.setPrecio(rs.getInt(4));
-                 producto.setCantidad(rs.getInt(5));
-                 //producto.
-                
+                 producto.setIdProducto(rs.getInt(1));
+                 producto.setNombre(rs.getString(2));
+                 producto.setCodigo(rs.getInt(3));
+                 producto.setDescripcion(rs.getString(4));
+                 producto.setPrecio(rs.getInt(5));
+                 producto.setCantidad(rs.getInt(6));
+                 producto.setIdRestriccion(rs.getInt(7));
                  listaProducto.add(producto);
             
             }
@@ -73,4 +92,32 @@ public class ProductoDAO {
         return listaProducto;
         
     }
+    
+     public ArrayList<Producto> buscarProductoNombre(String nombre) {
+        ArrayList<Producto> listaProductos = new ArrayList();
+        Producto producto;
+
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_buscaPxNombre(?)");
+            cs.setString(1, nombre + '%');
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                producto = new Producto();
+                producto.setIdProducto(rs.getInt(1));
+                producto.setNombre(rs.getString(2));
+                producto.setCodigo(rs.getInt(3));
+                producto.setDescripcion(rs.getString(4));
+                producto.setPrecio(rs.getDouble(5));
+                producto.setCantidad(rs.getInt(6));
+                producto.setIdRestriccion(rs.getInt(7));
+                listaProductos.add(producto);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaProductos;
+    }
+     
 }

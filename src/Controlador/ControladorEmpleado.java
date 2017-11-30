@@ -137,7 +137,6 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
             columna[7] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getCiudad();
             columna[8] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getUsuario();
             columna[9] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getPassword();
-            //columna[10] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getIdTipoEmpleado();
             int num = modelo.buscarEmpleadoApellidos(apellidos).get(i).getIdTipoEmpleado();
             if (num == 1) {
                 columna[10] = "Cajero";
