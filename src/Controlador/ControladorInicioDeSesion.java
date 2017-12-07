@@ -23,14 +23,18 @@ public class ControladorInicioDeSesion {
         String rptaRegistro = modelo.inicioSesion(user, password);
         
         if (rptaRegistro != null && rptaRegistro.equals("Registro Exitoso")) {
+             
             this.vistaInicioSesion.dispose();
-            new MenuPrincipal().setVisible(true);
+            
+            new MenuPrincipal(this.vistaInicioSesion.campoUsuario.getText()).setVisible(true);
             
         } else {
             JOptionPane.showMessageDialog(null, "Usuario y/o contraseña incorrectos");
         }
 
     }
+    
+    
     
     public void salirSistema(){
         System.exit(0);

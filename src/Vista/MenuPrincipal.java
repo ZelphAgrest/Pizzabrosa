@@ -3,9 +3,11 @@ package Vista;
 import Controlador.Comunica;
 import Controlador.ControladorCliente;
 import Controlador.ControladorEmpleado;
+import Controlador.ControladorPedido;
 import Controlador.ControladorProducto;
 import Modelo.ClienteDAO;
 import Modelo.EmpleadoDAO;
+import Modelo.PedidoDAO;
 import Modelo.ProductoDAO;
 import javax.swing.JFrame;
 
@@ -14,20 +16,25 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
     ClienteDAO modelo;
     EmpleadoDAO modeloE;
     ProductoDAO modeloP;
+    PedidoDAO modeloPe;
     ControladorCliente controlador;
     ControladorEmpleado controladorE;
     ControladorProducto controladorP;
+    ControladorPedido controladorPe;
+    static String usser;
     
 
     /**
      * Creates new form AdminCliente
      */
-    public MenuPrincipal() {
+    public MenuPrincipal(String usuario) {
         initComponents();
         setTitle("Pizzabrosa - Menú Principal");
         setLocationRelativeTo(null);
         setResizable(false);
+        usser = usuario;
         this.iniciaClase();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -43,6 +50,9 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         popupEmpleado = new javax.swing.JPopupMenu();
         editarPopUpEmpleados = new javax.swing.JMenuItem();
         eliminarPopUpEmpleados = new javax.swing.JMenuItem();
+        popupProductos = new javax.swing.JPopupMenu();
+        popUpEditarProducto = new javax.swing.JMenuItem();
+        popUpEliminarProducto = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -87,12 +97,14 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         TablaPedidos = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        txtBuscarPedido = new javax.swing.JTextField();
         botonActualzarPedido = new javax.swing.JButton();
         botonRegistarPedido = new javax.swing.JButton();
         botonCerrarSesionPedido = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        comboBusquedaxEstatus = new javax.swing.JComboBox<>();
+        jLabel19 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -135,6 +147,19 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         eliminarPopUpEmpleados.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoEliminar.png")); // NOI18N
         eliminarPopUpEmpleados.setText("Eliminar");
         popupEmpleado.add(eliminarPopUpEmpleados);
+
+        popUpEditarProducto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoEditar.png")); // NOI18N
+        popUpEditarProducto.setText("Editar");
+        popUpEditarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popUpEditarProductoActionPerformed(evt);
+            }
+        });
+        popupProductos.add(popUpEditarProducto);
+
+        popUpEliminarProducto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoEliminar.png")); // NOI18N
+        popUpEliminarProducto.setText("Eliminar");
+        popupProductos.add(popUpEliminarProducto);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -416,6 +441,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
                 "ID Producto", "Nombre", "Código", "Descripción", "Precio", "Cantidad", "Restricciones"
             }
         ));
+        tablaProductos.setComponentPopupMenu(popupProductos);
         jScrollPane3.setViewportView(tablaProductos);
 
         botonActualziarProducto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoActualizar.png")); // NOI18N
@@ -538,9 +564,25 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         ));
         jScrollPane4.setViewportView(TablaPedidos);
 
+        txtBuscarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarPedidoActionPerformed(evt);
+            }
+        });
+
         botonActualzarPedido.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoActualizar.png")); // NOI18N
+        botonActualzarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActualzarPedidoActionPerformed(evt);
+            }
+        });
 
         botonRegistarPedido.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\Iconopedidos.png")); // NOI18N
+        botonRegistarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistarPedidoActionPerformed(evt);
+            }
+        });
 
         botonCerrarSesionPedido.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\iconoCerrarSesión.png")); // NOI18N
         botonCerrarSesionPedido.addActionListener(new java.awt.event.ActionListener() {
@@ -554,6 +596,15 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setText("Escribe el apellido del cliente que deseas buscar:");
 
+        comboBusquedaxEstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona un Estatus", "Entregado", "En Proceso", "Cancelado" }));
+        comboBusquedaxEstatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBusquedaxEstatusActionPerformed(evt);
+            }
+        });
+
+        jLabel19.setText("Filtrar Pedidos por estatus:");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -565,9 +616,6 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel16)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(botonActualzarPedido)
                                 .addGap(42, 42, 42)
@@ -576,16 +624,26 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
                         .addGap(41, 41, 41)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel18)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(usuarioLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 266, Short.MAX_VALUE)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(usuarioLabel3))
+                                    .addComponent(jLabel18))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
                                 .addComponent(jLabel8)
                                 .addGap(42, 42, 42)
-                                .addComponent(botonCerrarSesionPedido)))))
+                                .addComponent(botonCerrarSesionPedido))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel6Layout.createSequentialGroup()
+                                        .addComponent(jLabel16)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtBuscarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(comboBusquedaxEstatus, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(30, 30, 30))
         );
         jPanel6Layout.setVerticalGroup(
@@ -593,24 +651,29 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonCerrarSesionPedido, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(botonCerrarSesionPedido, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel8))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(usuarioLabel3)))
-                    .addComponent(jLabel8))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                            .addComponent(usuarioLabel3))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel18)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonRegistarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonActualzarPedido)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel16)
+                    .addComponent(txtBuscarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(botonRegistarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botonActualzarPedido))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboBusquedaxEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
@@ -651,7 +714,12 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         controladorE = new ControladorEmpleado(this, modeloE);
         modeloP= new ProductoDAO();
         controladorP = new ControladorProducto(this, modeloP);
-        
+        modeloPe = new PedidoDAO();
+        controladorPe = new ControladorPedido(this, modeloPe);
+        usuarioLabel3.setText(usser);
+        usuarioLabel2.setText(usser);
+        usuarioLabel1.setText(usser);
+        usuarioLabel.setText(usser);
     }
 
 
@@ -740,6 +808,41 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         new InicioSesion().setVisible(true);
     }//GEN-LAST:event_botonCerrarSesionPedidoActionPerformed
 
+    private void popUpEditarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpEditarProductoActionPerformed
+        EditarProductos vep = new EditarProductos(this);
+        controladorP.llenarComboEditarProducto(vep);
+        controladorP.vinculaEditaProducto(vep, this);
+        vep.setVisible(true);
+        vep.pack();
+        vep.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        vep.setLocationRelativeTo(null);
+    }//GEN-LAST:event_popUpEditarProductoActionPerformed
+
+    private void botonRegistarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistarPedidoActionPerformed
+        String cajero = usuarioLabel3.getText();
+        RegistrarPedido vrepe = new RegistrarPedido(this,cajero);
+        controladorPe.llenarCombo(vrepe);
+        controladorPe.VinculaRegistroPedido(vrepe);
+        vrepe.setVisible(true);
+        vrepe.pack();
+        vrepe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        vrepe.setLocationRelativeTo(null);
+    }//GEN-LAST:event_botonRegistarPedidoActionPerformed
+
+    private void botonActualzarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualzarPedidoActionPerformed
+       // controladorPe.LlenarTablaPedidos(TablaPedidos);
+        txtBuscarPedido.setText("");
+        comboBusquedaxEstatus.setSelectedIndex(0);
+    }//GEN-LAST:event_botonActualzarPedidoActionPerformed
+
+    private void txtBuscarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarPedidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarPedidoActionPerformed
+
+    private void comboBusquedaxEstatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBusquedaxEstatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBusquedaxEstatusActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -747,14 +850,14 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuPrincipal().setVisible(true);
+                new MenuPrincipal(usser).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTable TablaEmpleados;
-    private javax.swing.JTable TablaPedidos;
+    public javax.swing.JTable TablaPedidos;
     public javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonActualizarEmpleado;
     private javax.swing.JButton botonActualzarPedido;
@@ -767,6 +870,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
     private javax.swing.JButton botonRegistrar;
     private javax.swing.JButton botonRegistrarEmpleado;
     public javax.swing.JButton botonRegistrarProducto;
+    public javax.swing.JComboBox<String> comboBusquedaxEstatus;
     public javax.swing.JMenuItem editarPopUpClientes;
     public javax.swing.JMenuItem editarPopUpEmpleados;
     public javax.swing.JMenuItem eliminarPopUpClientes;
@@ -781,6 +885,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -800,12 +905,15 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
+    public javax.swing.JMenuItem popUpEditarProducto;
+    public javax.swing.JMenuItem popUpEliminarProducto;
     public javax.swing.JPopupMenu popup;
     private javax.swing.JPopupMenu popupEmpleado;
+    public javax.swing.JPopupMenu popupProductos;
     public javax.swing.JTable tablaProductos;
     public javax.swing.JTable tablitaClientes;
     public javax.swing.JTextField txtBuscarEmpleado;
+    public javax.swing.JTextField txtBuscarPedido;
     public javax.swing.JTextField txtBuscarProducto;
     public javax.swing.JTextField txtBusquedaCliente;
     private javax.swing.JLabel usuarioLabel;

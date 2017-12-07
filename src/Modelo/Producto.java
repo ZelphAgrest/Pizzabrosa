@@ -12,7 +12,7 @@ package Modelo;
 public class Producto {
    String nombre, descripcion;
    int codigo, cantidad, idProducto, idRestriccion;
-
+   double precio;
    public Producto(){
         
     }
@@ -32,9 +32,7 @@ public class Producto {
     public void setIdRestriccion(int idRestriccion) {
         this.idRestriccion = idRestriccion;
     }
-   double precio;
-
-
+   
     public String getNombre() {
         return nombre;
     }

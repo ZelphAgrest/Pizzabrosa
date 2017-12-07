@@ -120,4 +120,46 @@ public class ProductoDAO {
         return listaProductos;
     }
      
+     public String editaProducto(String idProducto,String nombre, String codigo, String descripcion, String precio, String cantidad, String idRestriccion ) {
+        String rptaRegistro = null;
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_editaProducto(?,?,?,?,?,?,?)");
+
+            cs.setString(1, idProducto);
+            cs.setString(2, nombre);
+            cs.setString(3, codigo);
+            cs.setString(4, descripcion);
+            cs.setString(5, precio);
+            cs.setString(6, cantidad);
+            cs.setString(7, idRestriccion);
+           
+
+            int numFAfectadas = cs.executeUpdate();
+            System.out.println("Filas afectadas " + numFAfectadas);
+            if (numFAfectadas > 0) {
+                rptaRegistro = "Registro Exitoso";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       
+        return rptaRegistro;
+    }
+     
+     public int eliminarProducto(String idProducto) {
+        int numFA = 0;
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_eliminarProducto(?)");
+
+            cs.setString(1, idProducto);
+
+            numFA = cs.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numFA;
+
+    }
 }
