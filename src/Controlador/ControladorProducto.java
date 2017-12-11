@@ -1,5 +1,6 @@
 package Controlador;
 
+import Modelo.Producto;
 import Modelo.ProductoDAO;
 import Vista.EditarProductos;
 import Vista.MenuPrincipal;
@@ -13,12 +14,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+
+import java.math.BigDecimal;
+
 /**
  *
  * @author LOGAN
  */
 public class ControladorProducto implements ActionListener, Comunica, KeyListener {
-
+    
     RegistrarProductos vistaproducto = new RegistrarProductos(this);
     EditarProductos vistaEditarProducto = new EditarProductos(this);
     MenuPrincipal vistaAdmin;
@@ -104,18 +108,19 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
 
         Object[] columna = new Object[7];
 
+        ArrayList<Producto> listaProductos = modeloProducto.listProducto();
         int numRegistros = modeloProducto.listProducto().size();
         ArrayList<String> lista = modeloProducto.consultarRestricciones();
         int k;
 
         for (int i = 0; i < numRegistros; i++) {
-            k = modeloProducto.listProducto().get(i).getIdRestriccion();
-            columna[0] = modeloProducto.listProducto().get(i).getIdProducto();
-            columna[1] = modeloProducto.listProducto().get(i).getNombre();
-            columna[2] = modeloProducto.listProducto().get(i).getCodigo();
-            columna[3] = modeloProducto.listProducto().get(i).getDescripcion();
-            columna[4] = modeloProducto.listProducto().get(i).getPrecio();
-            columna[5] = modeloProducto.listProducto().get(i).getCantidad();
+            k = listaProductos.get(i).getIdRestriccion();
+            columna[0] = listaProductos.get(i).getIdProducto();
+            columna[1] = listaProductos.get(i).getNombre();
+            columna[2] = listaProductos.get(i).getCodigo();
+            columna[3] = listaProductos.get(i).getDescripcion();
+            columna[4] = listaProductos.get(i).getPrecio();
+            columna[5] = listaProductos.get(i).getCantidad();
             columna[6] = lista.get(k - 1);
             modeloT.addRow(columna);
             vistaAdmin.tablaProductos.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -141,18 +146,19 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
 
         Object[] columna = new Object[7];
 
+        ArrayList<Producto> listaProductos = modeloProducto.buscarProductoNombre(palabra);
         int numRegistros = modeloProducto.buscarProductoNombre(palabra).size();
         ArrayList<String> lista = modeloProducto.consultarRestricciones();
         int k;
 
         for (int i = 0; i < numRegistros; i++) {
-            columna[0] = modeloProducto.buscarProductoNombre(palabra).get(i).getIdProducto();
-            columna[1] = modeloProducto.buscarProductoNombre(palabra).get(i).getNombre();
-            columna[2] = modeloProducto.buscarProductoNombre(palabra).get(i).getCodigo();
-            columna[3] = modeloProducto.buscarProductoNombre(palabra).get(i).getDescripcion();
-            columna[4] = modeloProducto.buscarProductoNombre(palabra).get(i).getPrecio();
-            columna[5] = modeloProducto.buscarProductoNombre(palabra).get(i).getCantidad();
-            k = modeloProducto.buscarProductoNombre(palabra).get(i).getIdRestriccion();
+            columna[0] = listaProductos.get(i).getIdProducto();
+            columna[1] = listaProductos.get(i).getNombre();
+            columna[2] = listaProductos.get(i).getCodigo();
+            columna[3] = listaProductos.get(i).getDescripcion();
+            columna[4] = listaProductos.get(i).getPrecio();
+            columna[5] = listaProductos.get(i).getCantidad();
+            k = listaProductos.get(i).getIdRestriccion();
             columna[6] = lista.get(k - 1);
             modeloT.addRow(columna);
             vistaAdmin.tablaProductos.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -163,6 +169,54 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
 
         }
     }
+    
+    //Búsqueda de Productos por Código
+    public void busquedaProductosCodigo() {
+        System.out.println("Entró a buscar por código");
+        String palabra = vistaAdmin.txtBuscarProducto.getText();
+        System.out.println(palabra);
+        DefaultTableModel modeloT = new DefaultTableModel();
+        vistaAdmin.tablaProductos.setModel(modeloT);
+        modeloT.addColumn("ID Producto");
+        modeloT.addColumn("Nombre");
+        modeloT.addColumn("Codigo");
+        modeloT.addColumn("Descripcion");
+        modeloT.addColumn("Precio");
+        modeloT.addColumn("Cantidad");
+        modeloT.addColumn("Restriccion");
+
+        Object[] columna = new Object[7];
+
+        ArrayList<Producto> listaProductos = modeloProducto.buscarProductoCódgio(palabra);
+        int numRegistros = modeloProducto.buscarProductoCódgio(palabra).size();
+        ArrayList<String> lista = modeloProducto.consultarRestricciones();
+        int k;
+
+        for (int i = 0; i < numRegistros; i++) {
+            columna[0] = listaProductos.get(i).getIdProducto();
+            columna[1] = listaProductos.get(i).getNombre();
+            columna[2] = listaProductos.get(i).getCodigo();
+            columna[3] = listaProductos.get(i).getDescripcion();
+            columna[4] = listaProductos.get(i).getPrecio();
+            columna[5] = listaProductos.get(i).getCantidad();
+            k = listaProductos.get(i).getIdRestriccion();
+            columna[6] = lista.get(k - 1);
+            modeloT.addRow(columna);
+            vistaAdmin.tablaProductos.getColumnModel().getColumn(0).setMaxWidth(0);
+
+            vistaAdmin.tablaProductos.getColumnModel().getColumn(0).setMinWidth(0);
+
+            vistaAdmin.tablaProductos.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
 
     public void actionPerformed(ActionEvent e) {
 //Guardar Productos
@@ -181,6 +235,10 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
                 JOptionPane.showMessageDialog(null, "Faltan campos con información por llenar");
             } else {
                 String rptaRegistro = modeloProducto.insertarProducto(nombre, codigo, descripcion, precio, cantidad, restriccion);
+                ArrayList<Producto> listaProductos = modeloProducto.buscarProductoCódgio(codigo);
+                
+                int respuesta = listaProductos.size();
+                if(respuesta==0){
                 if (rptaRegistro != null && rptaRegistro.equals("Registro Exitoso")) {
                     JOptionPane.showMessageDialog(null, "El registro del Producto " + nombre + " ha sido guardado con éxito");
                     vistaproducto.txtNombreregistrarProductos.setText("");
@@ -194,6 +252,13 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
                 } else {
                     JOptionPane.showMessageDialog(null, "Ocurrio un error al ingresar el registro");
                 }
+                    
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null, "El código del producto ya se encuentra registrado");
+                }
+                
+                
             }
         }
 
@@ -290,8 +355,19 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
 
     @Override
     public void keyReleased(KeyEvent e) {
+       
         if (e.getSource() == vistaAdmin.txtBuscarProducto) {
+             try{
+            Integer.parseInt(vistaAdmin.txtBuscarProducto.getText());
+            busquedaProductosCodigo();
+            System.out.println("Llamó a buscar por código");
+        }catch(NumberFormatException ex){
             busquedaProductos();
+        }
+            
+            
+            
+            
         }
     }
 

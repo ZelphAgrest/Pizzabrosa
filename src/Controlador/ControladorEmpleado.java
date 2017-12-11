@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controlador;
 
+import Modelo.Empleado;
 import Modelo.EmpleadoDAO;
 import Vista.EditarEmpleado;
 import Vista.MenuPrincipal;
@@ -13,14 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Zelph
- */
 public class ControladorEmpleado implements ActionListener, Comunica, KeyListener {
 
     RegistrarEmpleado vistaEmpleado = new RegistrarEmpleado(this);
@@ -88,12 +81,11 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
             vistaEditarEmpleado.txtUsuarioEmpleado.setText((String) vistaAdmin.TablaEmpleados.getValueAt(filaEditar, 8));
             vistaEditarEmpleado.txtPasswordEmpleado.setText((String) vistaAdmin.TablaEmpleados.getValueAt(filaEditar, 9));
             String valor = (String) vistaAdmin.TablaEmpleados.getValueAt(filaEditar, 10);
-            if(valor.equals("Cajero")){
-            vistaEditarEmpleado.comboEditarEmpleado.setSelectedIndex(1);
-            }else{
-            vistaEditarEmpleado.comboEditarEmpleado.setSelectedIndex(2);
+            if (valor.equals("Cajero")) {
+                vistaEditarEmpleado.comboEditarEmpleado.setSelectedIndex(1);
+            } else {
+                vistaEditarEmpleado.comboEditarEmpleado.setSelectedIndex(2);
             }
-            
 
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un Empleado");
@@ -123,21 +115,22 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
 
         Object[] columna = new Object[11];
 
+        ArrayList<Empleado> listaempleado = modelo.buscarEmpleadoApellidos(apellidos);
         int numRegistros = modelo.buscarEmpleadoApellidos(apellidos).size();
 
         for (int i = 0; i < numRegistros; i++) {
 
-            columna[0] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getIdEmpleado();
-            columna[1] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getNombre();
-            columna[2] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getApellido();
-            columna[3] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getTelefono();
-            columna[4] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getEmail();
-            columna[5] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getDireccion();
-            columna[6] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getCodigopostal();
-            columna[7] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getCiudad();
-            columna[8] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getUsuario();
-            columna[9] = modelo.buscarEmpleadoApellidos(apellidos).get(i).getPassword();
-            int num = modelo.buscarEmpleadoApellidos(apellidos).get(i).getIdTipoEmpleado();
+            columna[0] = listaempleado.get(i).getIdEmpleado();
+            columna[1] = listaempleado.get(i).getNombre();
+            columna[2] = listaempleado.get(i).getApellido();
+            columna[3] = listaempleado.get(i).getTelefono();
+            columna[4] = listaempleado.get(i).getEmail();
+            columna[5] = listaempleado.get(i).getDireccion();
+            columna[6] = listaempleado.get(i).getCodigopostal();
+            columna[7] = listaempleado.get(i).getCiudad();
+            columna[8] = listaempleado.get(i).getUsuario();
+            columna[9] = listaempleado.get(i).getPassword();
+            int num = listaempleado.get(i).getIdTipoEmpleado();
             if (num == 1) {
                 columna[10] = "Cajero";
             }
@@ -151,7 +144,7 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
             vistaAdmin.TablaEmpleados.getColumnModel().getColumn(0).setMinWidth(0);
 
             vistaAdmin.TablaEmpleados.getColumnModel().getColumn(0).setPreferredWidth(0);
-            
+
             vistaAdmin.TablaEmpleados.getColumnModel().getColumn(9).setMaxWidth(0);
 
             vistaAdmin.TablaEmpleados.getColumnModel().getColumn(9).setMinWidth(0);
@@ -181,20 +174,21 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
 
         Object[] columna = new Object[11];
 
+        ArrayList<Empleado> listaempleado = modelo.listEmpleado();
         int numRegistros = modelo.listEmpleado().size();
         for (int i = 0; i < numRegistros; i++) {
 
-            columna[0] = modelo.listEmpleado().get(i).getIdEmpleado();
-            columna[1] = modelo.listEmpleado().get(i).getNombre();
-            columna[2] = modelo.listEmpleado().get(i).getApellido();
-            columna[3] = modelo.listEmpleado().get(i).getTelefono();
-            columna[4] = modelo.listEmpleado().get(i).getEmail();
-            columna[5] = modelo.listEmpleado().get(i).getDireccion();
-            columna[6] = modelo.listEmpleado().get(i).getCodigopostal();
-            columna[7] = modelo.listEmpleado().get(i).getCiudad();
-            columna[8] = modelo.listEmpleado().get(i).getUsuario();
-            columna[9] = modelo.listEmpleado().get(i).getPassword();
-            int num = modelo.listEmpleado().get(i).getIdTipoEmpleado();
+            columna[0] = listaempleado.get(i).getIdEmpleado();
+            columna[1] = listaempleado.get(i).getNombre();
+            columna[2] = listaempleado.get(i).getApellido();
+            columna[3] = listaempleado.get(i).getTelefono();
+            columna[4] = listaempleado.get(i).getEmail();
+            columna[5] = listaempleado.get(i).getDireccion();
+            columna[6] = listaempleado.get(i).getCodigopostal();
+            columna[7] = listaempleado.get(i).getCiudad();
+            columna[8] = listaempleado.get(i).getUsuario();
+            columna[9] = listaempleado.get(i).getPassword();
+            int num = listaempleado.get(i).getIdTipoEmpleado();
             if (num == 1) {
                 columna[10] = "Cajero";
             }
@@ -208,7 +202,7 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
             tabla.getColumnModel().getColumn(0).setMinWidth(0);
 
             tabla.getColumnModel().getColumn(0).setPreferredWidth(0);
-            
+
             tabla.getColumnModel().getColumn(9).setMaxWidth(0);
 
             tabla.getColumnModel().getColumn(9).setMinWidth(0);
@@ -236,7 +230,7 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
             //Valida las contraseñas
             if (pass.equals(vistaEmpleado.txtConfrimaPassRegistrarEmpleado.getText())) {
 
-                if (nombre.equals("") || apellido.equals("") || telefono.equals("") || direccion.equals("") || ciudad.equals("") || usuario.equals("") || pass.equals("")||tipo==0) {
+                if (nombre.equals("") || apellido.equals("") || telefono.equals("") || direccion.equals("") || ciudad.equals("") || usuario.equals("") || pass.equals("") || tipo == 0) {
                     JOptionPane.showMessageDialog(null, "Faltan campos con información por llenar");
                 } else {
                     String rptaRegistro = modelo.inserteEmpleado(nombre, apellido, telefono, email, direccion, cp, ciudad, usuario, pass, tipoEmpleado);
@@ -256,7 +250,12 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
                         vistaEmpleado.comboTipoEmpleado.setSelectedIndex(0);
                         LlenarTablaEmpleado(this.vistaAdmin.TablaEmpleados);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Ocurrio un error al ingresar el registro");
+                        if (rptaRegistro.equals("El nombre de usuario ya se encuentra registrado")) {
+                            JOptionPane.showMessageDialog(null, "El nombre de usuario ya se encuentra registrado");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Ocurrio un error al ingresar el registro");
+                        }
+
                     }
                 }
 
@@ -296,13 +295,13 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
         //Habilita la contraseña del empleado
         if (e.getSource() == vistaEditarEmpleado.botonCambiarPassword) {
             String password = JOptionPane.showInputDialog("Ingresa la contraseña");
-            if(vistaEditarEmpleado.txtPasswordEmpleado.getText().equals(password)|| password.equals("MasterKey")){
+            if (vistaEditarEmpleado.txtPasswordEmpleado.getText().equals(password) || password.equals("MasterKey")) {
                 vistaEditarEmpleado.txtPasswordEmpleado.setEnabled(true);
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
-            }    
+            }
         }
-        
+
         //Guardar edición de empleados
         if (e.getSource() == vistaEditarEmpleado.botonGuardarEditarEmpleado) {
             String idcliente = vistaEditarEmpleado.txtIdEditarEmpleado.getText();
@@ -318,11 +317,11 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
             int tipo = vistaEditarEmpleado.comboEditarEmpleado.getSelectedIndex();
             String tipoEmpleado = Integer.toString(tipo);
 
-            if (nombre.equals("") || apellido.equals("") || telefono.equals("") || direccion.equals("") || ciudad.equals("") || nombreUsuario.equals("")||tipo==0||contrasenia.equals("")) {
+            if (nombre.equals("") || apellido.equals("") || telefono.equals("") || direccion.equals("") || ciudad.equals("") || nombreUsuario.equals("") || tipo == 0 || contrasenia.equals("")) {
                 JOptionPane.showMessageDialog(null, "Faltan campos con información por llenar");
             } else {
 
-                String rptaRegistro = modelo.editaEmpleado(idcliente, nombre, apellido, telefono, email, direccion, cp, ciudad, nombreUsuario,contrasenia,tipoEmpleado);
+                String rptaRegistro = modelo.editaEmpleado(idcliente, nombre, apellido, telefono, email, direccion, cp, ciudad, nombreUsuario, contrasenia, tipoEmpleado);
 
                 if (rptaRegistro != null && rptaRegistro.equals("Registro Exitoso")) {
                     JOptionPane.showMessageDialog(null, "El registro del Empleado " + nombre + " ha sido Editado con éxito");
@@ -339,33 +338,39 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
             vistaEditarEmpleado.setVisible(false);
 
         }
-        
+
 //Eliminar Empleados
         if (e.getSource() == vistaAdmin.eliminarPopUpEmpleados) {
             int filaInicio = vistaAdmin.TablaEmpleados.getSelectedRow();
             int numFS = vistaAdmin.TablaEmpleados.getSelectedRowCount();
-            String id = "";
-            String nombre = "";
-            if (filaInicio > 0) {
-                for (int i = 0; i < numFS; i++) {
-                    id = String.valueOf(vistaAdmin.TablaEmpleados.getValueAt(i + filaInicio, 0));
-                    nombre = String.valueOf(vistaAdmin.TablaEmpleados.getValueAt(i + filaInicio, 1));
+            String usuarioIniciado = vistaAdmin.TablaEmpleados.getValueAt(vistaAdmin.TablaEmpleados.getSelectedRow(), 8).toString();
+            String idEmpleadoEliminar = vistaAdmin.TablaEmpleados.getValueAt(vistaAdmin.TablaEmpleados.getSelectedRow(), 0).toString();
+            int tienePedidos = modelo.buscarEmpleadoEnPedidos(idEmpleadoEliminar).size();
+            if (vistaAdmin.usuarioLabel1.getText() == usuarioIniciado || tienePedidos == 0) {
 
-                    int rptaUsuario = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar el registro del Empleado " + nombre + "?");
-                    if (rptaUsuario == 0) {
-                        modelo.eliminarEmpleado(id);
-                        JOptionPane.showMessageDialog(null, "El registro del Empleado " + nombre + " ha sido Eliminado con éxito");
-                        
+                String id = "";
+                String nombre = "";
+                if (filaInicio > 0) {
+                    for (int i = 0; i < numFS; i++) {
+                        id = String.valueOf(vistaAdmin.TablaEmpleados.getValueAt(i + filaInicio, 0));
+                        nombre = String.valueOf(vistaAdmin.TablaEmpleados.getValueAt(i + filaInicio, 1));
+
+                        int rptaUsuario = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar el registro del Empleado " + nombre + "?");
+                        if (rptaUsuario == 0) {
+                            modelo.eliminarEmpleado(id);
+                            JOptionPane.showMessageDialog(null, "El registro del Empleado " + nombre + " ha sido Eliminado con éxito");
+
+                        }
                     }
+                    LlenarTablaEmpleado(vistaAdmin.TablaEmpleados);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Seleccione al menos una fila a eliminar");
                 }
-                LlenarTablaEmpleado(vistaAdmin.TablaEmpleados);
             } else {
-                JOptionPane.showMessageDialog(null, "Seleccione al menos una fila a eliminar");
+                JOptionPane.showMessageDialog(null, "NO se puede eliminar la cuenta: El usuario tiene su sesión activa ó el empleado ya tiene pedidos asignados");
             }
         }
-        
-        
-        
+
     }
 
     //Validaciones de Registro de empleado

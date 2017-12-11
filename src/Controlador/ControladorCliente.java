@@ -1,5 +1,6 @@
 package Controlador;
 
+import Modelo.Cliente;
 import Modelo.ClienteDAO;
 import Vista.EditarCliente;
 import Vista.MenuPrincipal;
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -16,8 +18,8 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
 
     RegistrarClientes vista = new RegistrarClientes(this);
     EditarCliente vistaEC = new EditarCliente(this);
-    MenuPrincipal vistaAdmin; 
-    ClienteDAO modelo; 
+    MenuPrincipal vistaAdmin;
+    ClienteDAO modelo;
 
     public ControladorCliente(EditarCliente vistaEdicion, ClienteDAO modelo, MenuPrincipal menu) {
         this.modelo = modelo;
@@ -45,7 +47,7 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
         this.vistaAdmin.botonActualizar.addActionListener(this);
         this.vistaAdmin.editarPopUpClientes.addActionListener(this);
         this.vistaAdmin.eliminarPopUpClientes.addActionListener(this);
-       // this.vistaAdmin.botonBuscar.addActionListener(this);
+        // this.vistaAdmin.botonBuscar.addActionListener(this);
         this.vistaAdmin.txtBusquedaCliente.addKeyListener(this);
         LlenarTabla(this.vistaAdmin.tablitaClientes);
     }
@@ -106,7 +108,6 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
 
     public void busquedaCliente() {
         String apellidos = vistaAdmin.txtBusquedaCliente.getText();
-        
 
         DefaultTableModel modeloT = new DefaultTableModel();
         vistaAdmin.tablitaClientes.setModel(modeloT);
@@ -123,17 +124,17 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
         Object[] columna = new Object[8];
 
         int numRegistros = modelo.buscarClienteApellidos(apellidos).size();
-
+        ArrayList<Cliente> listacliente = modelo.buscarClienteApellidos(apellidos);
         for (int i = 0; i < numRegistros; i++) {
 
-            columna[0] = modelo.buscarClienteApellidos(apellidos).get(i).getidCliente();
-            columna[1] = modelo.buscarClienteApellidos(apellidos).get(i).getNombre();
-            columna[2] = modelo.buscarClienteApellidos(apellidos).get(i).getApellido();
-            columna[3] = modelo.buscarClienteApellidos(apellidos).get(i).getTelefono();
-            columna[4] = modelo.buscarClienteApellidos(apellidos).get(i).getEmail();
-            columna[5] = modelo.buscarClienteApellidos(apellidos).get(i).getDireccion();
-            columna[6] = modelo.buscarClienteApellidos(apellidos).get(i).getCodigopostal();
-            columna[7] = modelo.buscarClienteApellidos(apellidos).get(i).getCiudad();
+            columna[0] = listacliente.get(i).getidCliente();
+            columna[1] = listacliente.get(i).getNombre();
+            columna[2] = listacliente.get(i).getApellido();
+            columna[3] = listacliente.get(i).getTelefono();
+            columna[4] = listacliente.get(i).getEmail();
+            columna[5] = listacliente.get(i).getDireccion();
+            columna[6] = listacliente.get(i).getCodigopostal();
+            columna[7] = listacliente.get(i).getCiudad();
             modeloT.addRow(columna);
 
             vistaAdmin.tablitaClientes.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -160,18 +161,18 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
         modeloT.addColumn("Ciudad");
 
         Object[] columna = new Object[8];
-
+        ArrayList<Cliente> listacliente = modelo.listCliente();
         int numRegistros = modelo.listCliente().size();
         for (int i = 0; i < numRegistros; i++) {
 
-            columna[0] = modelo.listCliente().get(i).getidCliente();
-            columna[1] = modelo.listCliente().get(i).getNombre();
-            columna[2] = modelo.listCliente().get(i).getApellido();
-            columna[3] = modelo.listCliente().get(i).getTelefono();
-            columna[4] = modelo.listCliente().get(i).getEmail();
-            columna[5] = modelo.listCliente().get(i).getDireccion();
-            columna[6] = modelo.listCliente().get(i).getCodigopostal();
-            columna[7] = modelo.listCliente().get(i).getCiudad();
+            columna[0] = listacliente.get(i).getidCliente();
+            columna[1] = listacliente.get(i).getNombre();
+            columna[2] = listacliente.get(i).getApellido();
+            columna[3] = listacliente.get(i).getTelefono();
+            columna[4] = listacliente.get(i).getEmail();
+            columna[5] = listacliente.get(i).getDireccion();
+            columna[6] = listacliente.get(i).getCodigopostal();
+            columna[7] = listacliente.get(i).getCiudad();
             modeloT.addRow(columna);
 
             tabla.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -195,30 +196,27 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
             String cp = vista.txtCP.getText();
             String ciudad = vista.txtCiudad.getText();
 
-            if (nombre.equals("")||apellido.equals("")||telefono.equals("")||direccion.equals("")||ciudad.equals("")){
-              JOptionPane.showMessageDialog(null, "Faltan campos con información por llenar");  
-            }else{
-             String rptaRegistro = modelo.insertCliente(nombre, apellido, telefono, email, direccion, cp, ciudad);
-            
-            
-            if (rptaRegistro != null && rptaRegistro.equals("Registro Exitoso")) {
-                JOptionPane.showMessageDialog(null, "El registro del cliente " + nombre + " ha sido guardado con éxito");
-                vista.txtNombre.setText("");
-                vista.txtApellido.setText("");
-                vista.txtTelefono.setText("");
-                vista.txtEmail.setText("");
-                vista.txtDireccion.setText("");
-                vista.txtCP.setText("");
-                vista.txtCiudad.setText("");
-                LlenarTabla(this.vistaAdmin.tablitaClientes); //No actualiza la tabla
+            if (nombre.equals("") || apellido.equals("") || telefono.equals("") || direccion.equals("") || ciudad.equals("")) {
+                JOptionPane.showMessageDialog(null, "Faltan campos con información por llenar");
             } else {
-                JOptionPane.showMessageDialog(null, "Ocurrio un error al ingresar el registro");
+                String rptaRegistro = modelo.insertCliente(nombre, apellido, telefono, email, direccion, cp, ciudad);
+
+                if (rptaRegistro != null && rptaRegistro.equals("Registro Exitoso")) {
+                    JOptionPane.showMessageDialog(null, "El registro del cliente " + nombre + " ha sido guardado con éxito");
+                    vista.txtNombre.setText("");
+                    vista.txtApellido.setText("");
+                    vista.txtTelefono.setText("");
+                    vista.txtEmail.setText("");
+                    vista.txtDireccion.setText("");
+                    vista.txtCP.setText("");
+                    vista.txtCiudad.setText("");
+                    LlenarTabla(this.vistaAdmin.tablitaClientes); //No actualiza la tabla
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ocurrio un error al ingresar el registro");
                 }
             }
         }
-        
-        
-        
+
         if (e.getSource() == vistaAdmin.botonActualizar) {
 
             LlenarTabla(vistaAdmin.tablitaClientes);
@@ -266,32 +264,34 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
         if (e.getSource() == vistaAdmin.eliminarPopUpClientes) {
             int filaInicio = vistaAdmin.tablitaClientes.getSelectedRow();
             int numFS = vistaAdmin.tablitaClientes.getSelectedRowCount();
-            String id = "";
-            String nombre = "";
-            if (filaInicio > 0) {
-                for (int i = 0; i < numFS; i++) {
-                    id = String.valueOf(vistaAdmin.tablitaClientes.getValueAt(i + filaInicio, 0));
-                    nombre = String.valueOf(vistaAdmin.tablitaClientes.getValueAt(i + filaInicio, 1));
+            String idClienteEliminar = vistaAdmin.tablitaClientes.getValueAt(vistaAdmin.tablitaClientes.getSelectedRow(), 0).toString();
+            int tienePedidos = modelo.buscarClienteEnPedidos(idClienteEliminar).size();
+            if (tienePedidos == 0) {
+                String id = "";
+                String nombre = "";
+                if (filaInicio > 0) {
+                    for (int i = 0; i < numFS; i++) {
+                        id = String.valueOf(vistaAdmin.tablitaClientes.getValueAt(i + filaInicio, 0));
+                        nombre = String.valueOf(vistaAdmin.tablitaClientes.getValueAt(i + filaInicio, 1));
 
-                    int rptaUsuario = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar el registro del Cliente " + nombre + "?");
-                    if (rptaUsuario == 0) {
-                        modelo.eliminarCliente(id);
-                        JOptionPane.showMessageDialog(null, "El registro del Cliente " + nombre + " ha sido Eliminado con éxito");
+                        int rptaUsuario = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar el registro del Cliente " + nombre + "?");
+                        if (rptaUsuario == 0) {
+                            modelo.eliminarCliente(id);
+                            JOptionPane.showMessageDialog(null, "El registro del Cliente " + nombre + " ha sido Eliminado con éxito");
+                        }
                     }
+                    LlenarTabla(vistaAdmin.tablitaClientes);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Seleccione al menos una fila a eliminar");
                 }
-                LlenarTabla(vistaAdmin.tablitaClientes);
             } else {
-                JOptionPane.showMessageDialog(null, "Seleccione al menos una fila a eliminar");
+                    JOptionPane.showMessageDialog(null, "No se puede eliminar tiene pedidos registrados");
             }
         }
 
     }
-    
-
-
 
     //Validaciones de los campos de texto
-
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getSource() == vistaEC.txtNombreEditarC || e.getSource() == vistaEC.txtApellidoEditarCliente || e.getSource() == vistaEC.txtCiudadEditarClientes) {
@@ -362,7 +362,5 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
             System.out.println("Escuchando el evento XD");
         }
     }
-
-   
 
 }

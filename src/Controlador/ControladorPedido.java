@@ -1,9 +1,11 @@
 package Controlador;
 
+import Modelo.Cliente;
 import Modelo.Empleado;
 import Modelo.Pedido;
 import Modelo.PedidoDAO;
 import Modelo.Producto;
+import Vista.EditarEstatusPedido;
 import Vista.MenuPrincipal;
 import Vista.RegistrarPedido;
 import java.awt.event.ActionEvent;
@@ -21,12 +23,15 @@ import javax.swing.table.DefaultTableModel;
 public class ControladorPedido implements ActionListener, Comunica, KeyListener {
 
     RegistrarPedido vistapedido = new RegistrarPedido(this, "");
+    EditarEstatusPedido vistaEstatus = new EditarEstatusPedido(this, "", "");
 
     MenuPrincipal vistaAdmin;
     PedidoDAO modeloPedido;
     Double cantidadtotal = 0.0;
     ArrayList<Producto> listaProductos;
     int idClient = 0;
+    String IdPedidoEdicionEstatus;
+    String idEstatusOriginal;
 
     //Obtiene la fecha del sistema y le da el formato
     SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -47,6 +52,23 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
             this.vistapedido.comboListaProductos.addItem(modeloPedido.consultarProductos().get(i).getNombre());
         }
 
+    }
+
+    public void llenarComboEditarEstatus(EditarEstatusPedido vistaEstatus) {
+        this.vistaEstatus = vistaEstatus;
+        int numRestric = modeloPedido.consultarEstatus().size();
+        for (int i = 0; i < numRestric; i++) {
+            this.vistaEstatus.comboCambiarEstatusPedido.addItem(modeloPedido.consultarEstatus().get(i));
+        }
+
+    }
+
+    public void vinculaEditarEstatusPedido(EditarEstatusPedido vistaEstatus) {
+        this.vistaEstatus = vistaEstatus;
+        this.vistaEstatus.botonGuardarEditarEstatusPedido.addActionListener(this);
+        this.vistaEstatus.botonRegresarEditarEstatusPedido.addActionListener(this);
+        IdPedidoEdicionEstatus = this.vistaEstatus.regresaIdPedido();
+        idEstatusOriginal = this.vistaEstatus.regresaIdEstatus();
     }
 
     public void VinculaRegistroPedido(RegistrarPedido vistaPedido) {
@@ -74,27 +96,25 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
         modeloT.addColumn("Empleado");
 
         Object[] columna = new Object[5];
-
-        int numRegistros = modeloPedido.listPedido().size();
+        ArrayList<Pedido> listaPedidos = modeloPedido.listPedido();
+        int numRegistros = listaPedidos.size();
         ArrayList<String> lista = modeloPedido.consultarEstatusPedido();
-        ArrayList<String> listaNClientes = modeloPedido.consultarNombreCliente();
-        ArrayList<String> listaNEmpleado = modeloPedido.consultarNombreEmpleado();
+        ArrayList<Cliente> listaNClientes = modeloPedido.consultarNombreCliente();
+        ArrayList<Empleado> listaNEmpleado = modeloPedido.consultarNombreEmpleado();
 
-        int k, l, m;
+        int k;
         String nombreCompleto, nombreEmpleado;
 
         for (int i = 0; i < numRegistros; i++) {
 
-            k = modeloPedido.listPedido().get(i).getIdEstatusPedido();
-            l = modeloPedido.listPedido().get(i).getIdCliente();
-            m = modeloPedido.listPedido().get(i).getIdEmpleado();
+            k = listaPedidos.get(i).getIdEstatusPedido();
 
-            columna[0] = modeloPedido.listPedido().get(i).getIdPedido();
-            columna[1] = modeloPedido.listPedido().get(i).getFechaPedido();
+            columna[0] = listaPedidos.get(i).getIdPedido();
+            columna[1] = listaPedidos.get(i).getFechaPedido();
             columna[2] = lista.get(k - 1);
-            nombreCompleto = listaNClientes.get(l - 1) + " " + listaNClientes.get(l);//Revisar esta parte del código
+            nombreCompleto = getNombreUser(listaNClientes, listaPedidos.get(i).getIdCliente()); //Revisar esta parte del código
             columna[3] = nombreCompleto;
-            nombreEmpleado = listaNEmpleado.get(m - 1) + " " + listaNEmpleado.get(m);//Revisar esta parte del código
+            nombreEmpleado = getEmpleadoUser(listaNEmpleado, listaPedidos.get(i).getIdEmpleado());//Revisar esta parte del código
             columna[4] = nombreEmpleado;
 
             modeloT.addRow(columna);
@@ -106,6 +126,32 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
             vistaAdmin.TablaPedidos.getColumnModel().getColumn(0).setPreferredWidth(0);
 
         }
+    }
+
+    private String getNombreUser(ArrayList<Cliente> cli, int idClienteActual) {
+        String nombre = "";
+        if (cli != null && cli.size() > 0) {
+            for (Cliente cliente : cli) {
+                if (cliente.getidCliente() == idClienteActual) {
+                    nombre = cliente.getNombre() + " " + cliente.getApellido();
+                    return nombre;
+                }
+            }
+        }
+        return nombre;
+    }
+
+    private String getEmpleadoUser(ArrayList<Empleado> emp, int idEmpleadoActual) {
+        String nombre = "";
+        if (emp != null && emp.size() > 0) {
+            for (Empleado empleado : emp) {
+                if (empleado.getIdEmpleado() == idEmpleadoActual) {
+                    nombre = empleado.getNombre() + " " + empleado.getApellido();
+                    return nombre;
+                }
+            }
+        }
+        return nombre;
     }
 
     public void busquedaPedidos() {
@@ -124,11 +170,12 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
 
             Object[] columna = new Object[5];
 
+            ArrayList<Pedido> listaPedidos = modeloPedido.listPedido();
             int numRegistros = modeloPedido.buscarPedidoxEstatus(estatus).size();
             ArrayList<String> lista = modeloPedido.consultarEstatusPedido();
-            ArrayList<String> listaNClientes = modeloPedido.consultarNombreCliente();
-            ArrayList<String> listaNEmpleado = modeloPedido.consultarNombreEmpleado();
-            int k, l, m;
+            ArrayList<Cliente> listaNClientes = modeloPedido.consultarNombreCliente();
+            ArrayList<Empleado> listaNEmpleado = modeloPedido.consultarNombreEmpleado();
+            int k;
             String nombreCompleto, nombreEmpleado;
 
             for (int i = 0; i < numRegistros; i++) {
@@ -136,11 +183,9 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
                 columna[1] = modeloPedido.buscarPedidoxEstatus(estatus).get(i).getFechaPedido();
                 k = modeloPedido.buscarPedidoxEstatus(estatus).get(i).getIdEstatusPedido();
                 columna[2] = lista.get(k - 1);
-                l = modeloPedido.buscarPedidoxEstatus(estatus).get(i).getIdCliente();
-                m = modeloPedido.buscarPedidoxEstatus(estatus).get(i).getIdEmpleado();
-                nombreCompleto = listaNClientes.get(l - 1) + " " + listaNClientes.get(l);
+                nombreCompleto = getNombreUser(listaNClientes, listaPedidos.get(i).getIdCliente());
                 columna[3] = nombreCompleto;
-                nombreEmpleado = listaNEmpleado.get(m - 1) + " " + listaNEmpleado.get(m);
+                nombreEmpleado = getEmpleadoUser(listaNEmpleado, listaPedidos.get(i).getIdEmpleado());
                 columna[4] = nombreEmpleado;
 
                 modeloT.addRow(columna);
@@ -246,12 +291,44 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
             vistapedido.setVisible(false);
         }
 
+        if (e.getSource() == vistaEstatus.botonGuardarEditarEstatusPedido) {
+            String idPedido = IdPedidoEdicionEstatus;
+            String idEstatusPedido = String.valueOf(vistaEstatus.comboCambiarEstatusPedido.getSelectedIndex());
+            System.out.println(idEstatusOriginal);
+            if (idEstatusPedido.equals("0")) {
+                JOptionPane.showMessageDialog(null, "Selecciona un Estatus para el pedido");
+            } else {
+                if (idEstatusOriginal.equals("Cancelado")) {
+                    JOptionPane.showMessageDialog(null, "El estatus del Pedido NO puede ser cambiado");
+                }
+                if (idEstatusOriginal.equals("Entregado")) {
+                    JOptionPane.showMessageDialog(null, "El estatus del Pedido NO puede ser cambiado");
+                }
+                if (idEstatusOriginal.equals("En Proceso") && !"2".equals(idEstatusPedido)) {
+                    String rptaRegistro = modeloPedido.editaEstatusPedido(idPedido, idEstatusPedido);
+                    if (rptaRegistro != null && rptaRegistro.equals("Registro Exitoso")) {
+                        JOptionPane.showMessageDialog(null, "El estatus del Pedido ha sido Editado con éxito");
+                        vistaEstatus.dispose();
+                        LlenarTablaPedidos(this.vistaAdmin.TablaPedidos);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ocurrio un error al editar el pedido");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "El pedido ya está en proceso");
+                }
+            }
+        }
+
+        if (e.getSource() == vistaEstatus.botonRegresarEditarEstatusPedido) {
+            vistaEstatus.setVisible(false);
+        }
+
         if (e.getSource() == vistapedido.botonGuardarRegistrarPedido) {
 
             String usr = vistapedido.labelRegistrarPedidoCajero.getText();
 
             int idEmpleado = modeloPedido.consultaridEmpleado(usr).get(0);
-            
+
             String id = String.valueOf(idEmpleado);
 
             System.out.println(fechaActual);

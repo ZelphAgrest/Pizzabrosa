@@ -37,13 +37,55 @@ public class PedidoDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // comentario
+       
+        return rptaRegistro;
+    }
+    
+    //Guardar los productos de un pedido
+     public String insertarProductosPedido(String idPedido, String idProducto, String cantidad, String precio){
+        String rptaRegistro=null;
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs= accesoDB.prepareCall("call sp_insertProductoPedido(?,?,?,?)");
+            
+            cs.setString(1, idPedido);
+            cs.setString(2, idProducto);
+            cs.setString(3, cantidad);
+            cs.setString(4, precio);
+            
+           
+            
+            int numFAfectadas = cs.executeUpdate();
+            System.out.println("Filas afectadas "+numFAfectadas);
+            if(numFAfectadas>0){
+                rptaRegistro="Registro Exitoso";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         return rptaRegistro;
     }
     
     
-    
-    
+     //Obtener los Estatus
+    public ArrayList<String> consultarEstatus(){
+        ArrayList<String> listarestatus = new ArrayList();
+        try{
+        Connection accesoDB = conexion.getConexion();
+        CallableStatement cs= accesoDB.prepareCall("select * from estatuspedido");
+       
+        ResultSet rs=cs.executeQuery();
+       
+        while (rs.next()){
+            listarestatus.add(rs.getString(2));
+            } 
+        }catch(Exception e){
+           e.printStackTrace();     
+        }
+        return listarestatus;
+    }
+     
     
 //Obtener la lista de productos para combobox
     public ArrayList<Producto> consultarProductos() {
@@ -114,8 +156,8 @@ public class PedidoDAO {
     }
 
     //Obtener el nombre del cliente
-    public ArrayList<String> consultarNombreCliente() {
-        ArrayList<String> listaNombreClientes = new ArrayList();
+    public ArrayList<Cliente> consultarNombreCliente() {
+        ArrayList<Cliente> listaNombreClientes = new ArrayList();
         try {
             Connection accesoDB = conexion.getConexion();
             CallableStatement cs = accesoDB.prepareCall("select * from cliente");
@@ -123,8 +165,11 @@ public class PedidoDAO {
             ResultSet rs = cs.executeQuery();
 
             while (rs.next()) {
-                listaNombreClientes.add(rs.getString(2));
-                listaNombreClientes.add(rs.getString(3));
+                Cliente cli = new Cliente();
+                cli.setidCliente(rs.getInt(1));
+                cli.setNombre(rs.getString(2));
+                cli.setApellido(rs.getString(3));
+                listaNombreClientes.add(cli);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -133,8 +178,8 @@ public class PedidoDAO {
     }
 
     //Obtener el nombre del Empleado
-    public ArrayList<String> consultarNombreEmpleado() {
-        ArrayList<String> listaNombreEmpleado = new ArrayList();
+    public ArrayList<Empleado> consultarNombreEmpleado() {
+        ArrayList<Empleado> listaNombreEmpleado = new ArrayList();
         try {
             Connection accesoDB = conexion.getConexion();
             CallableStatement cs = accesoDB.prepareCall("select * from empleado");
@@ -142,8 +187,12 @@ public class PedidoDAO {
             ResultSet rs = cs.executeQuery();
 
             while (rs.next()) {
-                listaNombreEmpleado.add(rs.getString(2));
-                listaNombreEmpleado.add(rs.getString(3));
+                Empleado emp = new Empleado();
+                emp.setIdEmpleado(rs.getInt(1));
+                emp.setNombre(rs.getString(2));
+                emp.setApellido(rs.getString(3));
+                listaNombreEmpleado.add(emp);
+                
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -224,5 +273,30 @@ public class PedidoDAO {
     return listaClientes;
     }
     
-    
+    //EditarEstatus del pedido
+      public String editaEstatusPedido(String idPedido,String idEstatusPedido) {
+        String rptaRegistro = null;
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_editaEstatusPedido(?,?)");
+
+            cs.setString(1, idPedido);
+            cs.setString(2, idEstatusPedido);
+           
+            int numFAfectadas = cs.executeUpdate();
+            System.out.println("Filas afectadas " + numFAfectadas);
+            if (numFAfectadas > 0) {
+                rptaRegistro = "Registro Exitoso";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       
+        return rptaRegistro;
+    }
+     
+     
+     
+     
+     
 }

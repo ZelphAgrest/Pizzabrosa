@@ -120,6 +120,35 @@ public class ProductoDAO {
         return listaProductos;
     }
      
+     
+     public ArrayList<Producto> buscarProductoCódgio(String codigo) {
+        ArrayList<Producto> listaProductos = new ArrayList();
+        Producto producto;
+
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_buscaPxCodigo(?)");
+            cs.setString(1, codigo);
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                producto = new Producto();
+                producto.setIdProducto(rs.getInt(1));
+                producto.setNombre(rs.getString(2));
+                producto.setCodigo(rs.getInt(3));
+                producto.setDescripcion(rs.getString(4));
+                producto.setPrecio(rs.getDouble(5));
+                producto.setCantidad(rs.getInt(6));
+                producto.setIdRestriccion(rs.getInt(7));
+                listaProductos.add(producto);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaProductos;
+    } 
+     
+     
      public String editaProducto(String idProducto,String nombre, String codigo, String descripcion, String precio, String cantidad, String idRestriccion ) {
         String rptaRegistro = null;
         try {

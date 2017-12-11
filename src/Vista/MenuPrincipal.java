@@ -53,6 +53,9 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         popupProductos = new javax.swing.JPopupMenu();
         popUpEditarProducto = new javax.swing.JMenuItem();
         popUpEliminarProducto = new javax.swing.JMenuItem();
+        popupPedidos = new javax.swing.JPopupMenu();
+        popUpEditarEstatusPedido = new javax.swing.JMenuItem();
+        popUpEditarProductosPedido = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
@@ -160,6 +163,24 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         popUpEliminarProducto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoEliminar.png")); // NOI18N
         popUpEliminarProducto.setText("Eliminar");
         popupProductos.add(popUpEliminarProducto);
+
+        popUpEditarEstatusPedido.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoEditar.png")); // NOI18N
+        popUpEditarEstatusPedido.setText("Editar Estatus");
+        popUpEditarEstatusPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popUpEditarEstatusPedidoActionPerformed(evt);
+            }
+        });
+        popupPedidos.add(popUpEditarEstatusPedido);
+
+        popUpEditarProductosPedido.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoEditar.png")); // NOI18N
+        popUpEditarProductosPedido.setText("Editar Productos");
+        popUpEditarProductosPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popUpEditarProductosPedidoActionPerformed(evt);
+            }
+        });
+        popupPedidos.add(popUpEditarProductosPedido);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -562,6 +583,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
                 "Cliente", "Fecha", "Estatus de Pedido"
             }
         ));
+        TablaPedidos.setComponentPopupMenu(popupPedidos);
         jScrollPane4.setViewportView(TablaPedidos);
 
         txtBuscarPedido.addActionListener(new java.awt.event.ActionListener() {
@@ -613,37 +635,31 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botonActualzarPedido)
-                                .addGap(42, 42, 42)
-                                .addComponent(botonRegistarPedido))))
+                        .addComponent(jScrollPane4))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel6Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(usuarioLabel3))
-                                    .addComponent(jLabel18))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
-                                .addComponent(jLabel8)
-                                .addGap(42, 42, 42)
-                                .addComponent(botonCerrarSesionPedido))
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(usuarioLabel3))
+                            .addComponent(jLabel18)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel6Layout.createSequentialGroup()
-                                        .addComponent(jLabel16)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtBuscarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(comboBusquedaxEstatus, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtBuscarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(comboBusquedaxEstatus, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(botonActualzarPedido)
+                                .addGap(54, 54, 54)
+                                .addComponent(botonRegistarPedido))
+                            .addComponent(jLabel8))
+                        .addGap(42, 42, 42)
+                        .addComponent(botonCerrarSesionPedido)))
                 .addGap(30, 30, 30))
         );
         jPanel6Layout.setVerticalGroup(
@@ -667,9 +683,8 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
                     .addComponent(txtBuscarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(botonRegistarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(botonActualzarPedido))
+                    .addComponent(botonRegistarPedido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonActualzarPedido, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -843,6 +858,23 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboBusquedaxEstatusActionPerformed
 
+    private void popUpEditarEstatusPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpEditarEstatusPedidoActionPerformed
+        int index = TablaPedidos.getSelectedRow();
+        String idpedido = TablaPedidos.getValueAt(index, 0).toString();
+        String idEstatusOriginal = TablaPedidos.getValueAt(index, 2).toString();
+        EditarEstatusPedido veep = new EditarEstatusPedido(this,idpedido,idEstatusOriginal);
+        controladorPe.llenarComboEditarEstatus(veep);
+        controladorPe.vinculaEditarEstatusPedido(veep);
+        veep.setVisible(true);
+        veep.pack();
+        veep.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        veep.setLocationRelativeTo(null);
+    }//GEN-LAST:event_popUpEditarEstatusPedidoActionPerformed
+
+    private void popUpEditarProductosPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpEditarProductosPedidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_popUpEditarProductosPedidoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -905,10 +937,13 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JMenuItem popUpEditarEstatusPedido;
     public javax.swing.JMenuItem popUpEditarProducto;
+    public javax.swing.JMenuItem popUpEditarProductosPedido;
     public javax.swing.JMenuItem popUpEliminarProducto;
     public javax.swing.JPopupMenu popup;
     private javax.swing.JPopupMenu popupEmpleado;
+    private javax.swing.JPopupMenu popupPedidos;
     public javax.swing.JPopupMenu popupProductos;
     public javax.swing.JTable tablaProductos;
     public javax.swing.JTable tablitaClientes;
@@ -917,7 +952,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
     public javax.swing.JTextField txtBuscarProducto;
     public javax.swing.JTextField txtBusquedaCliente;
     private javax.swing.JLabel usuarioLabel;
-    private javax.swing.JLabel usuarioLabel1;
+    public javax.swing.JLabel usuarioLabel1;
     private javax.swing.JLabel usuarioLabel2;
     private javax.swing.JLabel usuarioLabel3;
     // End of variables declaration//GEN-END:variables

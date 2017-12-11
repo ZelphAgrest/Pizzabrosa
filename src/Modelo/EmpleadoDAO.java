@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,7 +48,8 @@ public class EmpleadoDAO {
                 rptaRegistro = "Registro Exitoso";
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //JOptionPane.showMessageDialog(null, "");
+            rptaRegistro="El nombre de usuario ya se encuentra registrado";
         }
 
         return rptaRegistro;
@@ -83,6 +85,33 @@ public class EmpleadoDAO {
 
     }
 
+    //Busca al empleado en los pedidos
+    public ArrayList<Pedido> buscarEmpleadoEnPedidos(String idEmpleado){
+     ArrayList<Pedido> listaEmpleado = new ArrayList();
+        Pedido ped;
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_buscaExidEnPedido(?)");
+            cs.setString(1, idEmpleado);
+            
+            ResultSet rs = cs.executeQuery();
+            
+            while (rs.next()) {
+                ped = new Pedido();
+                ped.setIdPedido(1);
+                ped.setIdEmpleado(5);
+                
+                
+                listaEmpleado.add(ped);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaEmpleado;
+    }
+    
+    
     public ArrayList<Empleado> buscarEmpleadoApellidos(String apellido) {
         ArrayList<Empleado> listaEmpleado = new ArrayList();
         Empleado empleado;

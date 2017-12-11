@@ -137,4 +137,30 @@ public class ClienteDAO {
     }
     
     
+     //Busca al cliente en los pedidos
+    public ArrayList<Pedido> buscarClienteEnPedidos(String idCliente){
+     ArrayList<Pedido> listaEmpleado = new ArrayList();
+        Pedido ped;
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_buscaCxidEnPedido(?)");
+            cs.setString(1, idCliente);
+            
+            ResultSet rs = cs.executeQuery();
+            
+            while (rs.next()) {
+                ped = new Pedido();
+                ped.setIdPedido(1);
+                ped.setIdCliente(4);
+                
+                
+                listaEmpleado.add(ped);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaEmpleado;
+    }
+    
 }
