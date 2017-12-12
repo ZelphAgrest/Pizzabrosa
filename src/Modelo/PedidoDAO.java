@@ -221,6 +221,7 @@ public class PedidoDAO {
     }
     
     
+    
     //Buscar Pedidos por Estatus
     public ArrayList<Pedido> buscarPedidoxEstatus(int estatus) {
         ArrayList<Pedido> listaProductos = new ArrayList();
@@ -296,7 +297,77 @@ public class PedidoDAO {
     }
      
      
+    
+   
+    
+    public int consultarUltimoPedido(){
+        ArrayList<Pedido> listarpedido = new ArrayList();
+        try{
+        Connection accesoDB = conexion.getConexion();
+        CallableStatement cs= accesoDB.prepareCall("select * from pedido");
+       
+        ResultSet rs=cs.executeQuery();
+       
+        while (rs.next()){
+            Pedido pe = new Pedido();
+            pe.setIdPedido(rs.getInt(1));
+            listarpedido.add(pe);
+            } 
+        }catch(Exception e){
+           e.printStackTrace();     
+        }
+        int idPed = listarpedido.get(listarpedido.size()-1).getIdPedido();
+        return idPed;
+    }
      
-     
+    
+    
+    //Consultar los productos por id de pedido
+    public ArrayList<ProductoPedido> consultarProductosPedido(String idPedido) {
+        ArrayList<ProductoPedido> listaproductos = new ArrayList();
+         ProductoPedido pp;
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("select * from productospedido where idPedido="+"'"+idPedido+"'");
+
+            ResultSet rs = cs.executeQuery();
+
+            while (rs.next()) {
+                pp = new ProductoPedido();
+                pp.setIdPedido(rs.getInt(1));
+                pp.setIdProducto(rs.getInt(2));
+                pp.setCantidad(rs.getInt(3));
+                pp.setPrecioProducto(rs.getDouble(4));
+                listaproductos.add(pp);
+            
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaproductos;
+    }
+    //Consulta los productos para obtener su nombre para la tabla
+    public ArrayList<Producto> listProducto(){
+        ArrayList listaProducto = new ArrayList();
+        Producto producto;
+        try {
+            Connection accesoDB=conexion.getConexion();
+            PreparedStatement ps = accesoDB.prepareCall("select * from producto");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                 producto= new Producto();
+                 producto.setIdProducto(rs.getInt(1));
+                 producto.setNombre(rs.getString(2));
+                
+                 listaProducto.add(producto);
+            
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaProducto;
+        
+    }
      
 }

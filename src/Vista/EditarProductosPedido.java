@@ -5,6 +5,8 @@
  */
 package Vista;
 
+import Controlador.Comunica;
+
 /**
  *
  * @author Zelph
@@ -14,8 +16,21 @@ public class EditarProductosPedido extends javax.swing.JFrame {
     /**
      * Creates new form EditarProductosPedido
      */
-    public EditarProductosPedido() {
+    Comunica miInterfazRemota;
+    int idPedido;
+
+    public EditarProductosPedido(Comunica comunicacion, int idpedido) {
         initComponents();
+        setTitle("Editar Productos del Pedido");
+        setLocationRelativeTo(null);
+        setResizable(false);
+        miInterfazRemota = comunicacion;
+        idPedido = idpedido;
+       
+
+        //  TablaProductosPedido.getColumnModel().getColumn(0).setMaxWidth(0);
+        //  TablaProductosPedido.getColumnModel().getColumn(0).setMinWidth(0);
+        //  TablaProductosPedido.getColumnModel().getColumn(0).setPreferredWidth(0);
     }
 
     /**
@@ -27,6 +42,8 @@ public class EditarProductosPedido extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupProductosPedido = new javax.swing.JPopupMenu();
+        popUpEliminarProducto = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaProductosPedido = new javax.swing.JTable();
@@ -39,6 +56,12 @@ public class EditarProductosPedido extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         botonGuardarEditarProductoPedido = new javax.swing.JButton();
         botonRegresarEditarProductoPedido = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        spinnerCantidadEditarProductosPedido = new javax.swing.JSpinner();
+
+        popUpEliminarProducto.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoEliminar.png")); // NOI18N
+        popUpEliminarProducto.setText("Eliminar Producto");
+        popupProductosPedido.add(popUpEliminarProducto);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,6 +73,7 @@ public class EditarProductosPedido extends javax.swing.JFrame {
                 "Nombre del Producto", "Código", "Cantidad", "Precio Unitario", "Sub Total"
             }
         ));
+        TablaProductosPedido.setComponentPopupMenu(popupProductosPedido);
         jScrollPane1.setViewportView(TablaProductosPedido);
 
         comboProducosEditarPedido.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona..." }));
@@ -71,6 +95,10 @@ public class EditarProductosPedido extends javax.swing.JFrame {
 
         botonRegresarEditarProductoPedido.setIcon(new javax.swing.ImageIcon("C:\\Users\\Zelph\\Documents\\NetBeansProjects\\PizzabrosaV1.0\\src\\Imagenes\\IconoRegresars.png")); // NOI18N
 
+        jLabel5.setText("Cantidad:");
+
+        spinnerCantidadEditarProductosPedido.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -81,9 +109,7 @@ public class EditarProductosPedido extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTotalEditarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
+                        .addComponent(jLabel1)
                         .addGap(55, 55, 55))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -91,19 +117,22 @@ public class EditarProductosPedido extends javax.swing.JFrame {
                                 .addComponent(botonGuardarEditarProductoPedido)
                                 .addGap(41, 41, 41)
                                 .addComponent(botonRegresarEditarProductoPedido))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(comboProducosEditarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(botonAgregarProductoEditarProductoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(28, 28, 28)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGap(221, 221, 221)
-                                            .addComponent(jLabel3))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                            .addGap(18, 18, 18)
-                                            .addComponent(botonAgregarProductoEditarProductoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel2)
-                                            .addGap(45, 45, 45))))
+                                        .addComponent(spinnerCantidadEditarProductosPedido)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtTotalEditarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3))
+                                    .addGap(76, 76, 76))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(26, Short.MAX_VALUE))))
         );
@@ -117,15 +146,24 @@ public class EditarProductosPedido extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtTotalEditarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2)
-                                .addComponent(comboProducosEditarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(botonAgregarProductoEditarProductoPedido))
-                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(23, 23, 23)
+                                        .addComponent(botonAgregarProductoEditarProductoPedido))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(txtTotalEditarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel2)
+                                            .addComponent(comboProducosEditarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(spinnerCantidadEditarProductosPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(26, 26, 26))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botonGuardarEditarProductoPedido))
@@ -179,7 +217,7 @@ public class EditarProductosPedido extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditarProductosPedido().setVisible(true);
+                //new EditarProductosPedido().setVisible(true);
             }
         });
     }
@@ -194,8 +232,12 @@ public class EditarProductosPedido extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtTotalEditarProductos;
+    public javax.swing.JMenuItem popUpEliminarProducto;
+    private javax.swing.JPopupMenu popupProductosPedido;
+    public javax.swing.JSpinner spinnerCantidadEditarProductosPedido;
+    public javax.swing.JTextField txtTotalEditarProductos;
     // End of variables declaration//GEN-END:variables
 }

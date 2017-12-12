@@ -5,7 +5,10 @@ import Modelo.Empleado;
 import Modelo.Pedido;
 import Modelo.PedidoDAO;
 import Modelo.Producto;
+import Modelo.ProductoPedido;
+import Modelo.ProductosPedido;
 import Vista.EditarEstatusPedido;
+import Vista.EditarProductosPedido;
 import Vista.MenuPrincipal;
 import Vista.RegistrarPedido;
 import java.awt.event.ActionEvent;
@@ -24,6 +27,7 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
 
     RegistrarPedido vistapedido = new RegistrarPedido(this, "");
     EditarEstatusPedido vistaEstatus = new EditarEstatusPedido(this, "", "");
+    EditarProductosPedido vistaeditarproductos = new EditarProductosPedido(this, 0);
 
     MenuPrincipal vistaAdmin;
     PedidoDAO modeloPedido;
@@ -54,6 +58,15 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
 
     }
 
+    public void llenarCombo(EditarProductosPedido vistaPedido) {
+        this.vistaeditarproductos = vistaPedido;
+        int numProductos = modeloPedido.consultarProductos().size();
+        for (int i = 0; i < numProductos; i++) {
+            this.vistaeditarproductos.comboProducosEditarPedido.addItem(modeloPedido.consultarProductos().get(i).getNombre());
+        }
+
+    }
+
     public void llenarComboEditarEstatus(EditarEstatusPedido vistaEstatus) {
         this.vistaEstatus = vistaEstatus;
         int numRestric = modeloPedido.consultarEstatus().size();
@@ -69,6 +82,15 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
         this.vistaEstatus.botonRegresarEditarEstatusPedido.addActionListener(this);
         IdPedidoEdicionEstatus = this.vistaEstatus.regresaIdPedido();
         idEstatusOriginal = this.vistaEstatus.regresaIdEstatus();
+    }
+
+    public void vinculaEditarProductosPedido(EditarProductosPedido vistaeditarproductos, String idpedidoeditar) {
+        this.vistaeditarproductos = vistaeditarproductos;
+        this.vistaeditarproductos.botonAgregarProductoEditarProductoPedido.addActionListener(this);
+        this.vistaeditarproductos.botonGuardarEditarProductoPedido.addActionListener(this);
+        this.vistaeditarproductos.botonRegresarEditarProductoPedido.addActionListener(this);
+        LlenarTablaProductosPedido(idpedidoeditar);
+        System.out.println("vinculo con editar pedidos productos");
     }
 
     public void VinculaRegistroPedido(RegistrarPedido vistaPedido) {
@@ -200,6 +222,58 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
         }
     }
 
+    //Llenar tabla editar productos del pedido
+    public void LlenarTablaProductosPedido(String idpedidobuscar) {
+        DefaultTableModel modeloT = new DefaultTableModel();
+        vistaeditarproductos.TablaProductosPedido.setModel(modeloT);
+        modeloT.addColumn("ID Pedido");
+        modeloT.addColumn("Nombre Producto");
+        modeloT.addColumn("Cantidad");
+        modeloT.addColumn("Precio");
+        modeloT.addColumn("Sub Total");
+
+        Object[] columna = new Object[5];
+
+        ArrayList<ProductoPedido> listaProductosPedidos = modeloPedido.consultarProductosPedido(idpedidobuscar);
+        ArrayList<Producto> listaproductos = modeloPedido.listProducto();
+
+        int numRegistros = listaProductosPedidos.size();
+        int numregis = listaproductos.size();
+        String produc="";
+        for (int i = 0; i < numRegistros; i++) {
+
+            columna[0] = listaProductosPedidos.get(i).getIdPedido();
+            //Obtener el nombre del producto
+            
+            for (int j = 0; j < numregis; j++) {
+                if (listaproductos.get(j).getIdProducto() == listaProductosPedidos.get(i).getIdProducto()) {
+                    produc =listaproductos.get(j).getNombre();
+                }
+            }
+            columna[1] = produc;
+            columna[2] = listaProductosPedidos.get(i).getCantidad();
+            columna[3] = listaProductosPedidos.get(i).getPrecioProducto();
+            int cant = listaProductosPedidos.get(i).getCantidad();
+            double pre = listaProductosPedidos.get(i).getPrecioProducto();
+            double subtotal = cant * pre;
+            columna[4] = (subtotal);
+
+            modeloT.addRow(columna);
+            vistaeditarproductos.TablaProductosPedido.getColumnModel().getColumn(0).setMaxWidth(0);
+
+            vistaeditarproductos.TablaProductosPedido.getColumnModel().getColumn(0).setMinWidth(0);
+
+            vistaeditarproductos.TablaProductosPedido.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+        }
+        double subtotal=0;
+        int numFilas = vistaeditarproductos.TablaProductosPedido.getRowCount();
+        for(int h =0; h<numFilas;h++){
+            subtotal =subtotal + (double) vistaeditarproductos.TablaProductosPedido.getValueAt(h, 4);
+        }
+        vistaeditarproductos.txtTotalEditarProductos.setText(String.valueOf(subtotal));
+    }
+
     public void agregarProductosalaTabla() {
 
         if (vistapedido.comboListaProductos.getSelectedItem() != "Seleccione un Producto") {
@@ -289,6 +363,7 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
 
         if (e.getSource() == vistapedido.botonRegresarRegistrarPedido) {
             vistapedido.setVisible(false);
+
         }
 
         if (e.getSource() == vistaEstatus.botonGuardarEditarEstatusPedido) {
@@ -321,8 +396,9 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
 
         if (e.getSource() == vistaEstatus.botonRegresarEditarEstatusPedido) {
             vistaEstatus.setVisible(false);
-        }
 
+        }
+//Guardar El pedido
         if (e.getSource() == vistapedido.botonGuardarRegistrarPedido) {
 
             String usr = vistapedido.labelRegistrarPedidoCajero.getText();
@@ -335,15 +411,48 @@ public class ControladorPedido implements ActionListener, Comunica, KeyListener 
             String estatusPedidous = "2";
             String idCliente = String.valueOf(idClient);
 
+            //Guarda el pedido
             String rptaRegistro = modeloPedido.insertarPedido(fechaActual, estatusPedidous, idCliente, id);
-            if (rptaRegistro != null && rptaRegistro.equals("Registro Exitoso")) {
-                JOptionPane.showMessageDialog(null, "El registro del Pedido ha sido guardado con éxito");
 
-            } else {
-                JOptionPane.showMessageDialog(null, "Ocurrio un error al ingresar el registro");
+            //Guardar la lista de Productos:
+            String idPedido = String.valueOf(modeloPedido.consultarUltimoPedido());
+
+            System.out.println("id del pedido" + idPedido);
+
+            String idProducto;
+            String cantidad;
+            String precio;
+            String rptaRegistroProductos = "";
+
+            for (int i = 0; i < vistapedido.tablaPedidos.getRowCount(); i++) {
+
+                idProducto = String.valueOf(vistapedido.tablaPedidos.getValueAt(i, 0));
+                System.out.println(idProducto + "id del Producto");
+                precio = String.valueOf(vistapedido.tablaPedidos.getValueAt(i, 2));
+                System.out.println(precio + "precio");
+                cantidad = String.valueOf(vistapedido.tablaPedidos.getValueAt(i, 3));
+                System.out.println(cantidad + "cantidad");
+
+                rptaRegistroProductos = modeloPedido.insertarProductosPedido(idPedido, idProducto, cantidad, precio);
             }
 
+            if (rptaRegistro != null && rptaRegistro.equals("Registro Exitoso") && rptaRegistroProductos != null && rptaRegistroProductos.equals("Registro Exitoso")) {
+                JOptionPane.showMessageDialog(null, "El registro del Pedido con sus productos ha sido guardado con éxito");
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ocurrio un error al ingresar el registro de los productos o pedido");
+            }
         }
+        
+        if(e.getSource() == vistaeditarproductos.botonRegresarEditarProductoPedido){
+            this.vistaeditarproductos.setVisible(false);
+        }
+        //Boton guardar en editar Productos del pedido
+        if(e.getSource() == vistaeditarproductos.botonGuardarEditarProductoPedido){
+        
+        }
+        
+        
     }
 
     @Override

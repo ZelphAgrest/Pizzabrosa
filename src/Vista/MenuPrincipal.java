@@ -21,6 +21,8 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
     ControladorEmpleado controladorE;
     ControladorProducto controladorP;
     ControladorPedido controladorPe;
+    //ControladorProductoPedido controladorPpe;
+    
     static String usser;
     
 
@@ -730,7 +732,7 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
         modeloP= new ProductoDAO();
         controladorP = new ControladorProducto(this, modeloP);
         modeloPe = new PedidoDAO();
-        controladorPe = new ControladorPedido(this, modeloPe);
+        controladorPe = new ControladorPedido(this, modeloPe);        
         usuarioLabel3.setText(usser);
         usuarioLabel2.setText(usser);
         usuarioLabel1.setText(usser);
@@ -872,7 +874,18 @@ public class MenuPrincipal extends javax.swing.JFrame implements Comunica {
     }//GEN-LAST:event_popUpEditarEstatusPedidoActionPerformed
 
     private void popUpEditarProductosPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popUpEditarProductosPedidoActionPerformed
-        // TODO add your handling code here:
+        int index = TablaPedidos.getSelectedRow();
+        int idpedido = (int) TablaPedidos.getValueAt(index, 0);
+        String idpedidos = String.valueOf(idpedido);
+        EditarProductosPedido vepp = new EditarProductosPedido(this,idpedido);
+        modeloPe.consultarProductosPedido(idpedidos);
+        controladorPe.vinculaEditarProductosPedido(vepp, idpedidos);
+        controladorPe.llenarCombo(vepp);
+        
+        vepp.setVisible(true);
+        vepp.pack();
+        vepp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        vepp.setLocationRelativeTo(null);
     }//GEN-LAST:event_popUpEditarProductosPedidoActionPerformed
 
     /**
