@@ -191,4 +191,32 @@ public class ProductoDAO {
         return numFA;
 
     }
+     
+     
+      public ArrayList<ProductoPedido> buscarProductoIdenPedido(String id) {
+        ArrayList<ProductoPedido> listaProductos = new ArrayList();
+        ProductoPedido producto;
+
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_buscaPxId(?)");
+            cs.setString(1, id);
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                producto = new ProductoPedido();
+                producto.setIdPedido(rs.getInt(1));
+                producto.setIdProducto(rs.getInt(2));
+                
+             
+                listaProductos.add(producto);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaProductos;
+    } 
+     
+     
+     
 }

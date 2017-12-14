@@ -61,7 +61,7 @@ public class PedidoDAO {
                 rptaRegistro="Registro Exitoso";
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           // e.printStackTrace();
         }
         
         return rptaRegistro;
@@ -370,4 +370,102 @@ public class PedidoDAO {
         
     }
      
+    //Buscar pedidos por id
+    public ArrayList<Pedido> buscarPedidoxid(String idpedido) {
+        ArrayList<Pedido> listaPedidos = new ArrayList();
+        Pedido pedido;
+
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_buscaPedidoxid(?)");
+
+            cs.setString(1, idpedido);
+
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                pedido = new Pedido();
+                pedido.setIdPedido(rs.getInt(1));
+                pedido.setFechaPedido(rs.getDate(2));
+                pedido.setIdEstatusPedido(rs.getInt(3));
+                pedido.setIdCliente(rs.getInt(4));
+                pedido.setIdEmpleado(rs.getInt(5));
+
+                listaPedidos.add(pedido);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaPedidos;
+    }
+    
+    //Consultar los datos del cliente por su nombre
+    
+     public ArrayList<Cliente> consultarDatosCliente(String nombreCliente) {
+        ArrayList<Cliente> listaNombreClientes = new ArrayList();
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_buscaClientexNombre(?)");
+
+            cs.setString(1, nombreCliente+'%');
+            
+            ResultSet rs = cs.executeQuery();
+
+            while (rs.next()) {
+                Cliente cli = new Cliente();
+                cli.setidCliente(rs.getInt(1));
+                cli.setNombre(rs.getString(2));
+                cli.setApellido(rs.getString(3));
+                listaNombreClientes.add(cli);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaNombreClientes;
+    }
+     
+    //eliminar producto del pedido
+      public int eliminarProductoPedido(String idPedido,String idProducto) {
+        int numFA = 0;
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_eliminarProductoPedido(?,?)");
+
+            cs.setString(1, idPedido);
+            cs.setString(2, idProducto);
+
+            numFA = cs.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return numFA;
+
+    }
+      
+      
+    //Editar productos del pedido
+    public String editaProductosPedido(String idPedido,String idProducto, String cantidad, String Precio) {
+        String rptaRegistro = null;
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_editaProductosPedido(?,?,?,?)");
+
+            cs.setString(1, idPedido);
+            cs.setString(2, idProducto);
+            cs.setString(3, cantidad);
+            cs.setString(4, Precio);
+           
+            int numFAfectadas = cs.executeUpdate();
+            System.out.println("Filas afectadas " + numFAfectadas);
+            if (numFAfectadas > 0) {
+                rptaRegistro = "Registro Exitoso";
+            }
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+       
+        return rptaRegistro;
+    }  
+      
+      
 }

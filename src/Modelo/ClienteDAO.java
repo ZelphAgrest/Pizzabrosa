@@ -163,4 +163,37 @@ public class ClienteDAO {
         return listaEmpleado;
     }
     
+    //Buscar clientepor su telefono
+    
+    public ArrayList<Cliente> buscarClienteTelefono(String telefono){
+    ArrayList<Cliente> listaClientes = new ArrayList();
+    Cliente cliente;
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs= accesoDB.prepareCall("call sp_buscaCxTelefono(?)");
+            
+            cs.setString(1, telefono+'%');
+            ResultSet rs = cs.executeQuery();
+            while(rs.next()){
+                cliente = new Cliente();
+                cliente.setidCliente(1);
+                cliente.setNombre(rs.getString(2));
+                cliente.setApellido(rs.getString(3));
+                cliente.setTelefono(rs.getString(4));
+                cliente.setEmail(rs.getString(5));
+                cliente.setDireccion(rs.getString(6));
+                cliente.setCodigopostal(rs.getString(7));
+                cliente.setCiudad(rs.getString(8));
+                listaClientes.add(cliente);
+            
+            
+            }
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    return listaClientes;
+    }
+    
+    
+    
 }

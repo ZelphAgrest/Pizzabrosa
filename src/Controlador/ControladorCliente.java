@@ -183,6 +183,59 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
         }
     }
 
+    
+    //Buscar cliente por telefono
+     public void busquedaClienteXTelefono() {
+        String telefono = vistaAdmin.txtBusquedaCliente.getText();
+
+        DefaultTableModel modeloT = new DefaultTableModel();
+        vistaAdmin.tablitaClientes.setModel(modeloT);
+
+        modeloT.addColumn("ID Cliente");
+        modeloT.addColumn("Nombre");
+        modeloT.addColumn("Apellido");
+        modeloT.addColumn("Teléfono");
+        modeloT.addColumn("Email");
+        modeloT.addColumn("Dirección");
+        modeloT.addColumn("Código Postal");
+        modeloT.addColumn("Ciudad");
+
+        Object[] columna = new Object[8];
+
+        int numRegistros = modelo.buscarClienteTelefono(telefono).size();
+        ArrayList<Cliente> listacliente = modelo.buscarClienteTelefono(telefono);
+        for (int i = 0; i < numRegistros; i++) {
+
+            columna[0] = listacliente.get(i).getidCliente();
+            columna[1] = listacliente.get(i).getNombre();
+            columna[2] = listacliente.get(i).getApellido();
+            columna[3] = listacliente.get(i).getTelefono();
+            columna[4] = listacliente.get(i).getEmail();
+            columna[5] = listacliente.get(i).getDireccion();
+            columna[6] = listacliente.get(i).getCodigopostal();
+            columna[7] = listacliente.get(i).getCiudad();
+            modeloT.addRow(columna);
+
+            vistaAdmin.tablitaClientes.getColumnModel().getColumn(0).setMaxWidth(0);
+
+            vistaAdmin.tablitaClientes.getColumnModel().getColumn(0).setMinWidth(0);
+
+            vistaAdmin.tablitaClientes.getColumnModel().getColumn(0).setPreferredWidth(0);
+        }
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //Action Performed de los botones (Aquí se realizan las Acciones de cada botón)
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -358,8 +411,14 @@ public class ControladorCliente implements ActionListener, KeyListener, Comunica
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getSource() == vistaAdmin.txtBusquedaCliente) {
-            busquedaCliente();
-            System.out.println("Escuchando el evento XD");
+            
+            try {
+                Integer.parseInt(vistaAdmin.txtBusquedaCliente.getText());
+                busquedaClienteXTelefono();
+                
+            } catch (NumberFormatException ex) {
+                busquedaCliente();
+            }
         }
     }
 

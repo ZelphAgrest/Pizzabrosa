@@ -188,5 +188,40 @@ public class EmpleadoDAO {
         return numFA;
 
     }
+    
+    
+    //Buscar empleado por telefono
+     public ArrayList<Empleado> buscarEmpleadoTelefono(String telefono) {
+        ArrayList<Empleado> listaEmpleado = new ArrayList();
+        Empleado empleado;
+
+        try {
+            Connection accesoDB = conexion.getConexion();
+            CallableStatement cs = accesoDB.prepareCall("call sp_buscaExTelefono(?)");
+            cs.setString(1, telefono + '%');
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                empleado = new Empleado();
+                empleado.setIdEmpleado(1);
+                empleado.setNombre(rs.getString(2));
+                empleado.setApellido(rs.getString(3));
+                empleado.setTelefono(rs.getString(4));
+                empleado.setEmail(rs.getString(5));
+                empleado.setDireccion(rs.getString(6));
+                empleado.setCodigopostal(rs.getString(7));
+                empleado.setCiudad(rs.getString(8));
+                empleado.setUsuario(rs.getString(9));
+                empleado.setPassword(rs.getString(10));
+                empleado.setIdTipoEmpleado(rs.getInt(11));
+                listaEmpleado.add(empleado);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaEmpleado;
+    }
+    
+    
 
 }

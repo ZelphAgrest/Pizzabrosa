@@ -211,6 +211,65 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
         }
     }
 
+    //Buscar empleado por telefono
+    public void busquedaEmpleadoXTelefono() {
+        String telefono = vistaAdmin.txtBuscarEmpleado.getText();
+        DefaultTableModel modeloT = new DefaultTableModel();
+        vistaAdmin.TablaEmpleados.setModel(modeloT);
+
+        modeloT.addColumn("ID Empleado");
+        modeloT.addColumn("Nombre");
+        modeloT.addColumn("Apellido");
+        modeloT.addColumn("Teléfono");
+        modeloT.addColumn("Email");
+        modeloT.addColumn("Dirección");
+        modeloT.addColumn("Código Postal");
+        modeloT.addColumn("Ciudad");
+        modeloT.addColumn("Usuario");
+        modeloT.addColumn("Contraseña");
+        modeloT.addColumn("Tipo Empleado");
+
+        Object[] columna = new Object[11];
+
+        ArrayList<Empleado> listaempleado = modelo.buscarEmpleadoTelefono(telefono);
+        int numRegistros = modelo.buscarEmpleadoTelefono(telefono).size();
+
+        for (int i = 0; i < numRegistros; i++) {
+
+            columna[0] = listaempleado.get(i).getIdEmpleado();
+            columna[1] = listaempleado.get(i).getNombre();
+            columna[2] = listaempleado.get(i).getApellido();
+            columna[3] = listaempleado.get(i).getTelefono();
+            columna[4] = listaempleado.get(i).getEmail();
+            columna[5] = listaempleado.get(i).getDireccion();
+            columna[6] = listaempleado.get(i).getCodigopostal();
+            columna[7] = listaempleado.get(i).getCiudad();
+            columna[8] = listaempleado.get(i).getUsuario();
+            columna[9] = listaempleado.get(i).getPassword();
+            int num = listaempleado.get(i).getIdTipoEmpleado();
+            if (num == 1) {
+                columna[10] = "Cajero";
+            }
+            if (num == 2) {
+                columna[10] = "Gerente";
+            }
+            modeloT.addRow(columna);
+
+            vistaAdmin.TablaEmpleados.getColumnModel().getColumn(0).setMaxWidth(0);
+
+            vistaAdmin.TablaEmpleados.getColumnModel().getColumn(0).setMinWidth(0);
+
+            vistaAdmin.TablaEmpleados.getColumnModel().getColumn(0).setPreferredWidth(0);
+
+            vistaAdmin.TablaEmpleados.getColumnModel().getColumn(9).setMaxWidth(0);
+
+            vistaAdmin.TablaEmpleados.getColumnModel().getColumn(9).setMinWidth(0);
+
+            vistaAdmin.TablaEmpleados.getColumnModel().getColumn(9).setPreferredWidth(0);
+        }
+
+    }
+
     public void actionPerformed(ActionEvent e) {
         //Registro del empleado
         if (e.getSource() == vistaEmpleado.botonGuardarRegistrarEmpleado) {
@@ -440,7 +499,14 @@ public class ControladorEmpleado implements ActionListener, Comunica, KeyListene
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getSource() == vistaAdmin.txtBuscarEmpleado) {
-            busquedaEmpleado();
+            try {
+                Integer.parseInt(vistaAdmin.txtBuscarEmpleado.getText());
+                busquedaEmpleadoXTelefono();
+
+            } catch (NumberFormatException ex) {
+                busquedaEmpleado();
+            }
+
         }
     }
 

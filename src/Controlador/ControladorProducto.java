@@ -2,6 +2,7 @@ package Controlador;
 
 import Modelo.Producto;
 import Modelo.ProductoDAO;
+import Modelo.ProductoPedido;
 import Vista.EditarProductos;
 import Vista.MenuPrincipal;
 import Vista.RegistrarProductos;
@@ -14,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-
 import java.math.BigDecimal;
 
 /**
@@ -22,7 +22,7 @@ import java.math.BigDecimal;
  * @author LOGAN
  */
 public class ControladorProducto implements ActionListener, Comunica, KeyListener {
-    
+
     RegistrarProductos vistaproducto = new RegistrarProductos(this);
     EditarProductos vistaEditarProducto = new EditarProductos(this);
     MenuPrincipal vistaAdmin;
@@ -169,7 +169,7 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
 
         }
     }
-    
+
     //Búsqueda de Productos por Código
     public void busquedaProductosCodigo() {
         System.out.println("Entró a buscar por código");
@@ -210,13 +210,6 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
 
         }
     }
-    
-    
-    
-    
-    
-    
-    
 
     public void actionPerformed(ActionEvent e) {
 //Guardar Productos
@@ -234,31 +227,34 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
             if (nombre.equals("") || codigo.equals("") || descripcion.equals("") || precio.equals("") || cant <= 0 || res == 0) {
                 JOptionPane.showMessageDialog(null, "Faltan campos con información por llenar");
             } else {
-                String rptaRegistro = modeloProducto.insertarProducto(nombre, codigo, descripcion, precio, cantidad, restriccion);
+
                 ArrayList<Producto> listaProductos = modeloProducto.buscarProductoCódgio(codigo);
-                
-                int respuesta = listaProductos.size();
-                if(respuesta==0){
-                if (rptaRegistro != null && rptaRegistro.equals("Registro Exitoso")) {
-                    JOptionPane.showMessageDialog(null, "El registro del Producto " + nombre + " ha sido guardado con éxito");
-                    vistaproducto.txtNombreregistrarProductos.setText("");
-                    vistaproducto.txtCodigoRegistrarProductos.setText("");
-                    vistaproducto.txtDescripcionRegistrarProductos.setText("");
-                    vistaproducto.txtPrecioRegistrarProductos.setText("");
-                    vistaproducto.comborestriccionesRegistrarProductos.setSelectedIndex(0);
-                    vistaproducto.spinnerCantidadRegistrarProductos.setValue(0);
-                    LlenarTablaProductos(this.vistaAdmin.tablaProductos);
+                int respuesta = 0;
+                respuesta = listaProductos.size();
+                System.out.println(respuesta);
+                /* for (Producto p : listaProductos){
+                    System.out.println(p.getNombre());
+                }*/
+                if (respuesta == 0) {
+                    String rptaRegistro = modeloProducto.insertarProducto(nombre, codigo, descripcion, precio, cantidad, restriccion);
+                    if (rptaRegistro != null && rptaRegistro.equals("Registro Exitoso")) {
+                        JOptionPane.showMessageDialog(null, "El registro del Producto " + nombre + " ha sido guardado con éxito");
+                        vistaproducto.txtNombreregistrarProductos.setText("");
+                        vistaproducto.txtCodigoRegistrarProductos.setText("");
+                        vistaproducto.txtDescripcionRegistrarProductos.setText("");
+                        vistaproducto.txtPrecioRegistrarProductos.setText("");
+                        vistaproducto.comborestriccionesRegistrarProductos.setSelectedIndex(0);
+                        vistaproducto.spinnerCantidadRegistrarProductos.setValue(0);
+                        LlenarTablaProductos(this.vistaAdmin.tablaProductos);
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ocurrio un error al ingresar el registro");
+                    }
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ocurrio un error al ingresar el registro");
-                }
-                    
-                    
-                }else{
                     JOptionPane.showMessageDialog(null, "El código del producto ya se encuentra registrado");
                 }
-                
-                
+
             }
         }
 
@@ -292,7 +288,7 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
                 }
             }
         }
-        
+
         //Eliminar Productos
         if (e.getSource() == vistaAdmin.popUpEliminarProducto) {
             int filaInicio = vistaAdmin.tablaProductos.getSelectedRow();
@@ -303,18 +299,27 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
                 for (int i = 0; i < numFS; i++) {
                     id = String.valueOf(vistaAdmin.tablaProductos.getValueAt(i + filaInicio, 0));
                     nombre = String.valueOf(vistaAdmin.tablaProductos.getValueAt(i + filaInicio, 1));
-
+                    ArrayList<ProductoPedido> listaproducstos = modeloProducto.buscarProductoIdenPedido(id);
+                    int productousado = listaproducstos.size();
+                    if (productousado == 0) {
                     int rptaUsuario = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar el registro del Producto " + nombre + "?");
-                    if (rptaUsuario == 0) {
+
+                    if (rptaUsuario == 0 && productousado == 0) {
                         modeloProducto.eliminarProducto(id);
                         JOptionPane.showMessageDialog(null, "El registro del producto " + nombre + " ha sido Eliminado con éxito");
-                        
+
                     }
-                }
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se puede eliminar el producto, se encuentra asociado a un pedido");
+                    }
                 LlenarTablaProductos(vistaAdmin.tablaProductos);
-            } else {
+                    
+                    
+            } 
+            }else {
                 JOptionPane.showMessageDialog(null, "Seleccione al menos una fila a eliminar");
             }
+
         }
 
     }
@@ -339,6 +344,11 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
             if ((c < '0' || c > '9')) {
                 e.consume();
             }
+            String caracteres2 = vistaEditarProducto.txtCodigoEditarProducto.getText();
+            if (caracteres2.length() >= 5) {
+                e.consume();
+
+            }
         }
         if (e.getSource() == vistaEditarProducto.txtPrecioEditarProducto) {
             char c = e.getKeyChar();
@@ -355,19 +365,16 @@ public class ControladorProducto implements ActionListener, Comunica, KeyListene
 
     @Override
     public void keyReleased(KeyEvent e) {
-       
+
         if (e.getSource() == vistaAdmin.txtBuscarProducto) {
-             try{
-            Integer.parseInt(vistaAdmin.txtBuscarProducto.getText());
-            busquedaProductosCodigo();
-            System.out.println("Llamó a buscar por código");
-        }catch(NumberFormatException ex){
-            busquedaProductos();
-        }
-            
-            
-            
-            
+            try {
+                Integer.parseInt(vistaAdmin.txtBuscarProducto.getText());
+                busquedaProductosCodigo();
+               
+            } catch (NumberFormatException ex) {
+                busquedaProductos();
+            }
+
         }
     }
 

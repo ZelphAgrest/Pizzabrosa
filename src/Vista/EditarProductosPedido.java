@@ -70,7 +70,7 @@ public class EditarProductosPedido extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre del Producto", "Código", "Cantidad", "Precio Unitario", "Sub Total"
+                "Id Pedido", "Id Producto", "Nombre del Producto", "Cantidad", "Precio Unitario", "Sub Total"
             }
         ));
         TablaProductosPedido.setComponentPopupMenu(popupProductosPedido);
